@@ -3,16 +3,17 @@
 @import './setup/base.css';
 @import './setup/layout.css';
 
-@import './cmps/Home.css';
-@import './cmps/AboutUs.css';
-@import './cmps/BugIndex.css';
-@import './cmps/BugDetails.css';
+
+@import './pages/Home.css';
+@import './pages/AboutUs.css';
+@import './pages/BugIndex.css';
+@import './pages/BugDetails.css';
+@import './pages/BugEdit.css';
 
 @import './cmps/AppHeader.css';
 @import './cmps/AppFooter.css';
 @import './cmps/UserMsg.css';
 
-@import './cmps/BugList.css';
-@import './cmps/BugFilter.css';
-@import './cmps/BugPreview.css';
-@import './cmps/BugEdit.css';
+@import './cmps/bug/BugList.css';
+@import './cmps/bug/BugFilter.css';
+@import './cmps/bug/BugPreview.css';
