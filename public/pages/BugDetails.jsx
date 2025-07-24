@@ -1,7 +1,8 @@
 const { useState, useEffect } = React
 const { Link, useParams } = ReactRouterDOM
 
-import { bugService } from '../services/bug.service.local.js'
+
+import { bugService } from '../services/bug/index.js'
 import { showErrorMsg } from '../services/event-bus.service.js'
 
 export function BugDetails() {
@@ -19,7 +20,7 @@ export function BugDetails() {
         <h3>Bug Details</h3>
         {!bug && <p className="loading">Loading....</p>}
         {
-            bug && 
+            bug &&
             <div>
                 <h4>{bug.title}</h4>
                 <h5>Severity: <span>{bug.severity}</span></h5>

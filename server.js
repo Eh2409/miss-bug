@@ -38,6 +38,8 @@ app.get('/api/bug/save', (req, res) => {
         createdAt
     }
 
+    console.log(bugToSave);
+
     bugService.save(bugToSave)
         .then(savedBug => res.send(savedBug))
         .catch(err => {

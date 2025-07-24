@@ -1,5 +1,5 @@
-import { utilService } from './util.service.js'
-import { storageService } from './async-storage.service.js'
+import { utilService } from '../util.service.js'
+import { storageService } from '../async-storage.service.js'
 
 const STORAGE_KEY = 'bugs'
 
@@ -9,25 +9,24 @@ export const bugService = {
     query,
     getById,
     save,
-    remove,
-    getDefaultFilter
+    remove
 }
 
 function query(filterBy) {
     return storageService.query(STORAGE_KEY)
-    .then(bugs => {
+        .then(bugs => {
 
-        if (filterBy.txt) {
-            const regExp = new RegExp(filterBy.txt, 'i')
-            bugs = bugs.filter(bug => regExp.test(bug.title))
-        }
+            if (filterBy.txt) {
+                const regExp = new RegExp(filterBy.txt, 'i')
+                bugs = bugs.filter(bug => regExp.test(bug.title))
+            }
 
-        if (filterBy.minSeverity) {
-            bugs = bugs.filter(bug => bug.severity >= filterBy.minSeverity)
-        }
+            if (filterBy.minSeverity) {
+                bugs = bugs.filter(bug => bug.severity >= filterBy.minSeverity)
+            }
 
-        return bugs
-    })
+            return bugs
+        })
 }
 
 function getById(bugId) {
@@ -48,7 +47,7 @@ function save(bug) {
 
 function _createBugs() {
     let bugs = utilService.loadFromStorage(STORAGE_KEY)
-    if (bugs && bugs.length > 0) return 
+    if (bugs && bugs.length > 0) return
 
     bugs = [
         {
@@ -73,8 +72,4 @@ function _createBugs() {
         }
     ]
     utilService.saveToStorage(STORAGE_KEY, bugs)
-}
-
-function getDefaultFilter() {
-    return { txt: '', minSeverity: 0 }
 }
