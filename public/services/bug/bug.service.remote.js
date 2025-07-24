@@ -4,7 +4,8 @@ export const bugService = {
     query,
     getById,
     save,
-    remove
+    remove,
+    createPdf
 }
 
 
@@ -29,5 +30,10 @@ function save(bug) {
     const { _id, title, description, severity, createdAt } = bug
     const queryStr = `?_id=${_id || ''}&title=${title}&description=${description}&severity=${severity}&createdAt=${createdAt || ''}`
     return axios.get(BASE_URL + '/save' + queryStr)
+        .then(res => res.data)
+}
+
+function createPdf() {
+    return axios.get(BASE_URL + '/pdf', { responseType: 'blob' })
         .then(res => res.data)
 }

@@ -2,7 +2,7 @@ import express from 'express'
 
 import { bugService } from './services/bug.service.js'
 import { loggerService } from './services/logger.service.js'
-
+import { generatePdf } from './services/pdf.service.js'
 
 const app = express()
 app.use(express.static('public'))
@@ -20,6 +20,27 @@ app.get('/api/bug', (req, res) => {
         .catch(err => {
             loggerService.error(err)
             res.status(400).send(err)
+        })
+})
+
+app.get('/api/bug/pdf', (req, res) => {
+
+    res.writeHead(200, {
+        'Content-Type': 'application/pdf',
+        'Content-Disposition': 'attachment;filename=bugs.pdf',
+    })
+
+    generatePdf(
+        (chunk) => res.write(chunk),
+        () => res.end()
+    )
+        .catch(err => {
+            if (!res.headersSent) {
+                loggerService.error(err)
+                res.status(400).send(err)
+            } else {
+                res.end()
+            }
         })
 })
 

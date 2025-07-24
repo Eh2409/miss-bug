@@ -1,4 +1,4 @@
-const { useState, useEffect } = React
+const { useState, useEffect, useRef } = React
 const { Link } = ReactRouterDOM
 
 import { bugService } from '../services/bug/index.js'
@@ -10,6 +10,8 @@ import { BugList } from '../cmps/bug/BugList.jsx'
 export function BugIndex() {
     const [bugs, setBugs] = useState(null)
     const [filterBy, setFilterBy] = useState(bugService.getDefaultFilter())
+
+    const createPdfBtnRef = useRef()
 
     useEffect(loadBugs, [filterBy])
 
@@ -33,8 +35,22 @@ export function BugIndex() {
         setFilterBy(prevFilter => ({ ...prevFilter, ...filterBy }))
     }
 
-    function papa() {
-        return 'papa'
+    function onMakePdf() {
+        bugService.createPdf()
+            .then(blob => {
+                const url = window.URL.createObjectURL(blob)
+
+                const a = document.createElement('a')
+                a.href = url
+                a.download = 'bugs-report.pdf'
+                document.body.appendChild(a)
+                a.click()
+                a.remove()
+
+                window.URL.revokeObjectURL(blob)
+                showSuccessMsg('PDF download started!')
+            })
+            .catch((err) => showErrorMsg(`Failed to generate PDF`, err))
     }
 
     return <section className="bug-index main-content">
@@ -43,6 +59,7 @@ export function BugIndex() {
         <header>
             <h3>Bug List</h3>
             <Link to='/bug/edit'><button>Add Bug</button></Link>
+            <button onClick={onMakePdf}>Pdf</button>
         </header>
 
         <BugList
