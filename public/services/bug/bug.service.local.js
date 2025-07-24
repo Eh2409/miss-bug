@@ -9,7 +9,8 @@ export const bugService = {
     query,
     getById,
     save,
-    remove
+    remove,
+    createPdf
 }
 
 function query(filterBy) {
@@ -72,4 +73,9 @@ function _createBugs() {
         }
     ]
     utilService.saveToStorage(STORAGE_KEY, bugs)
+}
+
+
+function createPdf() {
+    return Promise.reject('PDF creation is not supported on the local service.')
 }

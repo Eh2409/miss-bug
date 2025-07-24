@@ -50,7 +50,8 @@ export function BugIndex() {
                 window.URL.revokeObjectURL(blob)
                 showSuccessMsg('PDF download started!')
             })
-            .catch((err) => showErrorMsg(`Failed to generate PDF`, err))
+            .catch((err) =>
+                showErrorMsg(`Failed to generate PDF`, err))
     }
 
     return <section className="bug-index main-content">
@@ -58,8 +59,12 @@ export function BugIndex() {
         <BugFilter filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
         <header>
             <h3>Bug List</h3>
-            <Link to='/bug/edit'><button>Add Bug</button></Link>
-            <button onClick={onMakePdf}>Pdf</button>
+
+            <div>
+                <Link to='/bug/edit'><button>Add Bug</button></Link>
+                <button onClick={onMakePdf}>Pdf</button>
+            </div>
+
         </header>
 
         <BugList
