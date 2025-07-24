@@ -10,5 +10,13 @@ function getDefaultFilter() {
     return { txt: '', minSeverity: 0 }
 }
 
+function getEmptyBug() {
+    return {
+        title: '',
+        description: '',
+        severity: 0,
+    }
+}
+
 const service = isRemote ? remote : local
-export const bugService = { getDefaultFilter, ...service }
+export const bugService = { getDefaultFilter, getEmptyBug, ...service }

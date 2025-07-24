@@ -1,10 +1,11 @@
 const { useState, useEffect } = React
+const { Link } = ReactRouterDOM
 
 import { bugService } from '../services/bug/index.js'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
 
-import { BugFilter } from '../cmps/BugFilter.jsx'
-import { BugList } from '../cmps/BugList.jsx'
+import { BugFilter } from '../cmps/bug/BugFilter.jsx'
+import { BugList } from '../cmps/bug/BugList.jsx'
 
 export function BugIndex() {
     const [bugs, setBugs] = useState(null)
@@ -28,37 +29,12 @@ export function BugIndex() {
             .catch((err) => showErrorMsg(`Cannot remove bug`, err))
     }
 
-    function onAddBug() {
-        const bug = {
-            title: prompt('Bug title?', 'Bug ' + Date.now()),
-            severity: +prompt('Bug severity?', 3)
-        }
-
-        bugService.save(bug)
-            .then(savedBug => {
-                setBugs([...bugs, savedBug])
-                showSuccessMsg('Bug added')
-            })
-            .catch(err => showErrorMsg(`Cannot add bug`, err))
-    }
-
-    function onEditBug(bug) {
-        const severity = +prompt('New severity?', bug.severity)
-        const bugToSave = { ...bug, severity }
-
-        bugService.save(bugToSave)
-            .then(savedBug => {
-                const bugsToUpdate = bugs.map(currBug =>
-                    currBug._id === savedBug._id ? savedBug : currBug)
-
-                setBugs(bugsToUpdate)
-                showSuccessMsg('Bug updated')
-            })
-            .catch(err => showErrorMsg('Cannot update bug', err))
-    }
-
     function onSetFilterBy(filterBy) {
         setFilterBy(prevFilter => ({ ...prevFilter, ...filterBy }))
+    }
+
+    function papa() {
+        return 'papa'
     }
 
     return <section className="bug-index main-content">
@@ -66,12 +42,11 @@ export function BugIndex() {
         <BugFilter filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
         <header>
             <h3>Bug List</h3>
-            <button onClick={onAddBug}>Add Bug</button>
+            <Link to='/bug/edit'><button>Add Bug</button></Link>
         </header>
 
         <BugList
             bugs={bugs}
-            onRemoveBug={onRemoveBug}
-            onEditBug={onEditBug} />
+            onRemoveBug={onRemoveBug} />
     </section>
 }
