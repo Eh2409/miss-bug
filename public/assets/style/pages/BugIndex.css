@@ -1,8 +1,53 @@
-.bug-index header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+.bug-index {
 
-    padding-block: 1em;
-    border-block-end: 1px solid lightgray;
+    header {
+        padding-block: 1em;
+        border-block: 1px solid lightgray;
+
+        .bug-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .bug-filter-btn {
+                position: relative;
+            }
+
+            .bug-filter-black-wrapper {
+                position: fixed;
+                inset: 0;
+                background-color: rgba(0, 0, 0, 0.252);
+                z-index: 2;
+                cursor: pointer;
+
+                opacity: 0;
+                pointer-events: none;
+                transition: 200ms ease-in-out;
+
+                overflow: hidden;
+
+                &.open {
+                    opacity: 1;
+                    pointer-events: visible;
+
+                    .bug-filter {
+                        transform: translateX(0);
+                    }
+                }
+
+                .bug-filter {
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    cursor: auto;
+                    transform: translateX(100%);
+                    width: 300px;
+                    height: max-content;
+                    transition: 200ms ease-in-out;
+                    z-index: 3;
+                }
+            }
+        }
+    }
+
 }

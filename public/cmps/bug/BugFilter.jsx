@@ -1,9 +1,14 @@
-const { useState, useEffect } = React
+import { bugService } from "../../services/bug/index.js"
 
-export function BugFilter({ filterBy, onSetFilterBy }) {
+const { useState, useEffect, useRef } = React
+
+export function BugFilter({ filterBy, onSetFilterBy, toggleIsFilterPopupOpen }) {
 
     const [filterByToEdit, setFilterByToEdit] = useState(filterBy)
+    const [filterOptions, setFilterOptions] = useState([])
+    const defaultFilterRef = useRef(bugService.getDefaultFilter())
 
+    bugService
     useEffect(() => {
         onSetFilterBy(filterByToEdit)
     }, [filterByToEdit])
@@ -34,17 +39,64 @@ export function BugFilter({ filterBy, onSetFilterBy }) {
         onSetFilterBy(filterByToEdit)
     }
 
+    function onToggelFilterOptions(option) {
+        setFilterOptions(prev => {
+
+            if (prev.includes(option)) {
+                prev = prev.filter(op => op !== option)
+            } else {
+                prev = [...prev, option]
+            }
+
+            return prev
+        })
+    }
+
+    function onRestFilter() {
+        setFilterByToEdit(defaultFilterRef.current)
+    }
+
     const { txt, minSeverity } = filterByToEdit
     return (
-        <section className="bug-filter">
-            <h2>Filter</h2>
-            <form onSubmit={onSubmitFilter}>
-                <label htmlFor="txt">Text: </label>
-                <input value={txt} onChange={handleChange} type="text" placeholder="By Text" id="txt" name="txt" />
+        <section className="bug-filter" onClick={(event) => { event.stopPropagation() }}>
 
-                <label htmlFor="minSeverity">Min Severity: </label>
-                <input value={minSeverity} onChange={handleChange} type="number" placeholder="By Min Severity" id="minSeverity" name="minSeverity" />
+            <header className="filter-header">
+                <h2>Filter</h2>
+                <div className="close-btn" onClick={toggleIsFilterPopupOpen}>X</div>
+            </header>
+
+            <form onSubmit={onSubmitFilter}>
+
+
+                <div className={`label ${filterOptions.includes("txt") ? "open" : ""}`}>
+                    <div className="label-content" onClick={() => onToggelFilterOptions("txt")}>
+                        <span>Txt</span>
+                        <span>{filterOptions.includes("txt") ? "▲" : "▼"}</span>
+                    </div>
+
+                    <div className="input-cell">
+                        <div className="input-wrapper">
+                            <input value={txt} onChange={handleChange} type="text" placeholder="By Text" id="txt" name="txt" />
+                        </div>
+                    </div>
+                </div>
+
+                <div className={`label ${filterOptions.includes("minSeverity") ? "open" : ""}`}>
+
+                    <div className="label-content" onClick={() => onToggelFilterOptions("minSeverity")}>
+                        <span>Min Severity</span>
+                        <span>{filterOptions.includes("minSeverity") ? "▲" : "▼"}</span>
+                    </div>
+
+                    <div className="input-cell">
+                        <div className="input-wrapper">
+                            <input value={minSeverity || ''} onChange={handleChange} type="number" placeholder="By Min Severity" id="minSeverity" name="minSeverity" />
+                        </div>
+                    </div>
+                </div>
+
+                <button type="button" onClick={onRestFilter}>Reset</button>
             </form>
-        </section>
+        </section >
     )
 }

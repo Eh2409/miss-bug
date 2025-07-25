@@ -10,10 +10,13 @@ import { BugList } from '../cmps/bug/BugList.jsx'
 export function BugIndex() {
     const [bugs, setBugs] = useState(null)
     const [filterBy, setFilterBy] = useState(bugService.getDefaultFilter())
+    const [isFilterPopupOpen, setIsFilterPopupOpen] = useState(null)
+    const [activeFilterOptionsCount, setActiveFilterOptionsCount] = useState(0)
 
-    const createPdfBtnRef = useRef()
-
-    useEffect(loadBugs, [filterBy])
+    useEffect(() => {
+        onCountActiveFilterOptions(filterBy)
+        loadBugs()
+    }, [filterBy])
 
     function loadBugs() {
         bugService.query(filterBy)
@@ -54,17 +57,39 @@ export function BugIndex() {
                 showErrorMsg(`Failed to generate PDF`, err))
     }
 
+    // filter popup
+
+    function toggleIsFilterPopupOpen() {
+        setIsFilterPopupOpen(!isFilterPopupOpen)
+    }
+
+    function onCountActiveFilterOptions(filter) {
+        const count = Object.values(filter).filter(val => val).length
+        setActiveFilterOptionsCount(count)
+    }
+
     return <section className="bug-index main-content">
 
-        <BugFilter filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
         <header>
-            <h3>Bug List</h3>
+            <div className="bug-toolbar">
+                <div>
+                    <Link to='/bug/edit'><button>Add Bug</button></Link>
+                    <button onClick={onMakePdf}>Pdf</button>
+                </div>
 
-            <div>
-                <Link to='/bug/edit'><button>Add Bug</button></Link>
-                <button onClick={onMakePdf}>Pdf</button>
+                <button className="bug-filter-btn" onClick={toggleIsFilterPopupOpen}>
+                    Filter {activeFilterOptionsCount > 0 ? `(${activeFilterOptionsCount})` : ''}
+                </button>
+
+
+                <div className={`bug-filter-black-wrapper ${isFilterPopupOpen ? "open" : ""}`} onClick={toggleIsFilterPopupOpen}>
+                    <BugFilter
+                        filterBy={filterBy}
+                        onSetFilterBy={onSetFilterBy}
+                        toggleIsFilterPopupOpen={toggleIsFilterPopupOpen}
+                    />
+                </div>
             </div>
-
         </header>
 
         <BugList

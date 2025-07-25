@@ -1,13 +1,73 @@
 .bug-filter {
     background-color: var(--gray2);
-    padding: 1em;
-}
 
-.bug-filter h2 {
-    margin-bottom: .5em;
-}
+    .filter-header {
+        display: flex;
+        justify-content: space-between;
+        align-self: center;
 
-.bug-filter label {
-    margin-inline-start: 1em;
-}
+        padding-inline: 1em;
+        box-shadow: 0px 1px 0px black;
 
+        h2 {
+            margin-bottom: .5em;
+        }
+
+        .close-btn {
+            cursor: pointer;
+            font-size: 1.5em;
+
+            text-shadow: 0px 0px 0px rgb(60, 60, 60);
+
+            transition: 200ms;
+
+            &:hover {
+                font-weight: 600;
+                text-shadow: 1px 1px 1px rgb(60, 60, 60);
+            }
+        }
+    }
+
+    form {
+        display: grid;
+        padding: 1em;
+        gap: 1em;
+
+        .label {
+            cursor: pointer;
+            box-shadow: 0px 2px 0px black;
+
+            .label-content {
+                display: flex;
+                justify-content: space-between;
+                padding-block: 0.5em;
+            }
+
+
+            &.open {
+                .input-cell {
+                    grid-template-rows: 1fr;
+                }
+            }
+
+            .input-cell {
+                display: grid;
+                grid-template-rows: 0fr;
+                transition: grid-template-rows 200ms ease-in-out;
+                cursor: auto;
+
+                .input-wrapper {
+                    overflow: hidden;
+
+                    input {
+                        width: 100%;
+                        margin-block-end: 0.5em;
+                    }
+                }
+
+            }
+        }
+    }
+
+
+}
