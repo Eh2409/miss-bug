@@ -9,6 +9,7 @@
 }
 
 .bug-list li {
+    position: relative;
     display: grid;
     grid-template-rows: subgrid;
     grid-row: 2 span;
@@ -16,9 +17,38 @@
 
     padding: .7em;
     background-color: var(--bg1);
+    outline: 1px solid var(--bg2);
     border-radius: .2em;
 
-    color: whitesmoke;
+    overflow: hidden;
+
+    box-shadow: inset 10px 10px 10px rgba(33, 79, 26, 0.2),
+        15px 20px 10px rgba(0, 0, 0, 0.05),
+        15px 20px 20px rgba(0, 0, 0, 0.05),
+        inset -10px -10px 15px rgba(255, 255, 255, 0.05);
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -50%;
+
+        width: 15%;
+        height: 150%;
+        background-color: rgb(255, 255, 255, 0.5);
+        filter: blur(20px);
+        transform: skewX(-20deg);
+        transition: 400ms ease-in-out;
+
+    }
+
+    &:hover {
+        &::before {
+            left: 5%;
+            filter: blur(40px);
+            transform: skewX(-20deg);
+        }
+    }
 }
 
 .bug-list .actions {

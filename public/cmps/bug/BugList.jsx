@@ -10,8 +10,8 @@ export function BugList({ bugs, onRemoveBug }) {
             <li key={bug._id}>
                 <BugPreview bug={bug} />
                 <section className="actions">
-                    <button><Link to={`/bug/${bug._id}`}>Details</Link></button>
-                    <Link to={`/bug/edit/${bug._id}`}><button>Edit</button></Link>
+                    <Link to={`/bug/${bug._id}`} className="btn">Details</Link>
+                    <Link to={`/bug/edit/${bug._id}`} className="btn">Edit</Link>
                     <button onClick={() => onRemoveBug(bug._id)}>x</button>
                 </section>
             </li>

@@ -21,7 +21,7 @@ export function BugDetails() {
         {!bug && <p className="loading">Loading....</p>}
         {
             bug &&
-            <div>
+            <div className='bug-info'>
                 <h4>{bug.title}</h4>
                 <h5>Severity: <span>{bug.severity}</span></h5>
                 <pre>{bug.description}</pre>

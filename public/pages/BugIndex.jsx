@@ -68,7 +68,7 @@ export function BugIndex() {
         setActiveFilterOptionsCount(count)
     }
 
-    return <section className="bug-index main-content">
+    return <section className="bug-index">
 
         <header>
             <div className="bug-toolbar">

@@ -1,8 +1,91 @@
 .home-page {
+    position: relative;
     text-align: center;
+    overflow: hidden;
+
+    .animated-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+
+        background: radial-gradient(at 70% 90%, rgb(80, 107, 97) 10%, rgb(52, 62, 56)40%, rgb(0, 0, 0) 70%);
+        animation: hav 20s infinite;
+        z-index: 0;
+    }
+
+    .home-page-content {
+        z-index: 2;
+        min-width: calc(100vw - 4rem);
+
+        h2 {
+            font-size: 3em;
+            color: white;
+            margin-block-end: 0.5em;
+            text-shadow: 10px 10px 20px black;
+            margin-block-start: 60px;
+        }
+
+        .view-bug {
+            font-size: 1.5em;
+        }
+
+
+    }
+
+    .bug-img {
+        position: absolute;
+        right: 20%;
+        bottom: 0;
+
+        translate: 0;
+
+        width: 500px;
+        object-fit: contain;
+        --sat: 1;
+        filter: drop-shadow(-4px 10px 5px rgba(0, 0, 0, 0.612)) saturate(var(--sat));
+        animation: saturateAnim 2s infinite;
+        z-index: 1;
+    }
+
+
 }
 
-.home-page h2 {
-    margin-block-start: 3.5em;
-    font-size: 3em;
+
+@keyframes saturateAnim {
+    0% {
+        --sat: 1;
+    }
+
+    25% {
+        --sat: 1.40;
+    }
+
+    50% {
+        --sat: 1.75;
+    }
+
+    75% {
+        --sat: 1.40;
+    }
+
+    100% {
+        --sat: 1;
+    }
+}
+
+
+@keyframes hav {
+    0% {
+        filter: hue-rotate(0deg);
+    }
+
+    50% {
+        filter: hue-rotate(300deg);
+    }
+
+    100% {
+        filter: hue-rotate(0deg);
+    }
 }

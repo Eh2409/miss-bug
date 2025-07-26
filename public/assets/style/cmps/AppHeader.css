@@ -1,23 +1,39 @@
 .app-header {
     padding-block: 1em;
-    background-color: var(--gray1);
-    color: whitesmoke;
+    background-color: var(--bg4);
+
+    &>* {
+        align-items: center;
+        grid-row: 1;
+    }
+
+    .main-logo {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        justify-self: start;
+        font-size: 2em;
+
+        .bug-logo {
+            width: 30px;
+            aspect-ratio: 1/1;
+        }
+
+        &:hover {
+            .bug-logo {
+                filter: saturate(2);
+            }
+        }
+    }
 }
 
-.app-header > * {
-    align-items: center;
-    grid-row: 1;
-}
 
-.app-header h1 {
-    margin: 0;
-    justify-self: start;
-}
 
 .app-header nav {
     display: flex;
     gap: 1em;
-    justify-self: end;
+    justify-self: center;
 }
 
 .app-header nav a {
@@ -25,11 +41,6 @@
     text-decoration: none;
 }
 
-.app-header nav a:hover {
-    text-decoration: overline;
-}
-
 .app-header nav a.active {
     color: var(--color3);
-    border-block-end: 1px solid var(--color3);
 }

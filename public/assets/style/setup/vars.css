@@ -1,16 +1,20 @@
 :root {
-    --bg1: darkcyan;
-    --bg2: rgb(50, 165, 204);
-    --bg3: darkmagenta;
-    
+    --bg1: rgba(68, 68, 68, 0.675);
+    --bg2: rgb(91, 91, 91);
+    --bg3: rgb(102, 102, 102);
+    --bg4: #000002;
+    --bg5: #c6f436;
+    --bg6: #8bf43657;
+    --bg7: rgba(68, 68, 68);
+
     --color1: aliceblue;
     --color2: lightblue;
-    --color3: gold;
+    --color3: #c6f436;
     --color4: goldenrod;
-    
+
     --gray1: #444;
     --gray2: lightgray;
-    
+
     --success: green;
     --danger: orangered;
 }

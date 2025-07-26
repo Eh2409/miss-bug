@@ -15,7 +15,7 @@ export function App() {
         <div className="app-wrapper">
             <UserMsg />
             <AppHeader />
-            <main className="container">
+            <main className="main-content">
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/bug" element={<BugIndex />} />

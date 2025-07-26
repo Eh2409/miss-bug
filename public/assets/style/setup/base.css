@@ -1,23 +1,51 @@
 body {
     font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    background-color: var(--bg4);
+    color: white;
+
+
 }
 
-button {
+button,
+.btn {
+    position: relative;
     margin: 2px;
     border: 0;
     border-radius: .2em;
     padding: 6px 10px;
-    background-color: var(--gray1);
-    color: whitesmoke;
     cursor: pointer;
-    transition: background-color .5s;
+    background-color: var(--bg6);
+    color: white;
+    outline: 1px solid var(--bg5);
+    font-size: 1em;
+
+    transition: 200ms ease-in-out;
+
+    &:hover {
+        background-color: var(--bg5);
+        color: black;
+    }
 }
 
-button:hover {
-    color: var(--color2);
-    background-color: black;
-}
+
 
 pre {
     font-family: inherit;
+}
+
+input,
+textarea {
+    margin-block-end: 1em;
+    background-color: var(--bg3);
+    color: white;
+    padding: 0.5em;
+    border-radius: 10px;
+
+    &:focus {
+        outline: none;
+    }
+
+    &::placeholder {
+        color: rgb(213, 213, 213);
+    }
 }
