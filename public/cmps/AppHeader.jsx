@@ -19,11 +19,11 @@ export function AppHeader() {
         </Link>
 
         <div
-            className={`nav-black-wrapper  ${isMobileNavOpen ? "open" : ""}`}
+            className={`nav-black-wrapper  ${isMobileNavOpen ? "open-nav" : ""}`}
             onClick={toggleIsMobileNavOpen}>
         </div>
 
-        <nav className={isMobileNavOpen ? "open" : ""}>
+        <nav className={isMobileNavOpen ? "open-nav" : ""}>
             <NavLink to="/" onClick={onCloseMobileNav}>Home</NavLink>
             <NavLink to="/bug" onClick={onCloseMobileNav}>Bugs</NavLink>
             <NavLink to="/about" onClick={onCloseMobileNav}>About</NavLink>

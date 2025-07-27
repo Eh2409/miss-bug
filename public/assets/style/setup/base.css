@@ -3,9 +3,13 @@ body {
     background-color: var(--bg4);
     color: white;
     min-height: 100vh;
+}
 
-    &:has(.open) {
-        overflow-y: hidden;
+@media (max-width: 700px) {
+    body {
+        &:has(.open-nav) {
+            overflow-y: hidden;
+        }
     }
 }
 
