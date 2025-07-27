@@ -56,8 +56,7 @@ function save(bugToSave) {
             loggerService.error(`Cannot find bug ${bugToSave._id}`)
             return Promise.reject(`Cannot update bug`)
         }
-
-        bugs.splice(idx, 1, bugToSave)
+        bugs[idx] = { ...bugs[idx], ...bugToSave }
     } else {
         bugToSave._id = makeId()
         bugToSave.createdAt = Date.now()

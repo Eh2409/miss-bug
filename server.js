@@ -56,7 +56,7 @@ app.get('/api/bug/save', (req, res) => {
         title,
         description,
         severity: +severity,
-        createdAt
+        createdAt: +createdAt
     }
 
     console.log(bugToSave);
