@@ -2,8 +2,11 @@ body {
     font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
     background-color: var(--bg4);
     color: white;
+    min-height: 100vh;
 
-
+    &:has(.open) {
+        overflow-y: hidden;
+    }
 }
 
 button,

@@ -1,18 +1,37 @@
+const { useState } = React
 const { NavLink, Link } = ReactRouterDOM
-
 export function AppHeader() {
+    const [isMobileNavOpen, setIsMobileNavOpen] = useState(false)
+
+    function toggleIsMobileNavOpen() {
+        setIsMobileNavOpen(!isMobileNavOpen)
+    }
+    function onCloseMobileNav() {
+        if (!isMobileNavOpen) return
+        setIsMobileNavOpen(false)
+    }
+
     return <header className="app-header main-content single-row">
-        
+
         <Link to="/" className="main-logo">
             <img src="../assets/img/logo.png" alt="bug-logo" className="bug-logo" />
             <span> Miss Bug</span>
         </Link>
 
+        <div
+            className={`nav-black-wrapper  ${isMobileNavOpen ? "open" : ""}`}
+            onClick={toggleIsMobileNavOpen}>
+        </div>
 
-        <nav>
-            <NavLink to="/">Home</NavLink>
-            <NavLink to="/bug">Bugs</NavLink>
-            <NavLink to="/about">About</NavLink>
+        <nav className={isMobileNavOpen ? "open" : ""}>
+            <NavLink to="/" onClick={onCloseMobileNav}>Home</NavLink>
+            <NavLink to="/bug" onClick={onCloseMobileNav}>Bugs</NavLink>
+            <NavLink to="/about" onClick={onCloseMobileNav}>About</NavLink>
         </nav>
+
+        <button className="mobile-nav-btn" onClick={toggleIsMobileNavOpen}>
+            {isMobileNavOpen ? "Close" : "Open"}
+        </button>
+
     </header >
 }
