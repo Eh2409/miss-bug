@@ -27,6 +27,16 @@ button,
     &:hover {
         background-color: var(--bg5);
         color: black;
+
+        .icon {
+            filter: invert(0);
+        }
+    }
+
+    &:has(.icon) {
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 }
 
@@ -51,4 +61,12 @@ textarea {
     &::placeholder {
         color: rgb(213, 213, 213);
     }
+}
+
+.icon {
+    width: 18px;
+    aspect-ratio: 1/1;
+    margin: auto;
+    filter: invert(1);
+    transition: 200ms ease-in-out;
 }

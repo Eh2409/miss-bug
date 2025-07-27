@@ -72,9 +72,11 @@ export function BugIndex() {
 
         <header>
             <div className="bug-toolbar">
-                <div>
+                <div className='btns'>
                     <Link to='/bug/edit'><button>Add Bug</button></Link>
-                    <button onClick={onMakePdf}>Pdf</button>
+                    <button onClick={onMakePdf}>
+                        <img src="../assets/img/pdf.svg" alt="pdf" className="icon" />
+                    </button>
                 </div>
 
                 <button className="bug-filter-btn" onClick={toggleIsFilterPopupOpen}>

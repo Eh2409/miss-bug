@@ -30,7 +30,9 @@ export function AppHeader() {
         </nav>
 
         <button className="mobile-nav-btn" onClick={toggleIsMobileNavOpen}>
-            {isMobileNavOpen ? "Close" : "Open"}
+            <img src={`../assets/img/${isMobileNavOpen ? "x" : "bars"}.svg`}
+                alt={isMobileNavOpen ? "x" : "bars"}
+                className="icon" />
         </button>
 
     </header >
