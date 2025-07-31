@@ -54,22 +54,30 @@ function _createBugs() {
         {
             title: "Infinite Loop Detected",
             severity: 4,
-            _id: "1NF1N1T3"
+            _id: "1NF1N1T3",
+            description: "The system enters a loop that never exits, causing the application to hang indefinitely.",
+            labels: ['critical', 'dev-branch']
         },
         {
             title: "Keyboard Not Found",
             severity: 3,
-            _id: "K3YB0RD"
+            _id: "K3YB0RD",
+            description: "Input device not recognized. User is unable to provide any input via keyboard.",
+            labels: ['critical', 'need-CR']
         },
         {
             title: "404 Coffee Not Found",
             severity: 2,
-            _id: "C0FF33"
+            _id: "C0FF33",
+            description: "Developer caffeine levels critically low. Coffee not located in expected location.",
+            labels: ['critical']
         },
         {
             title: "Unexpected Response",
             severity: 1,
-            _id: "G0053"
+            _id: "G0053",
+            description: "Received an unexpected response from the server, causing a temporary UI glitch.",
+            labels: ['dev-branch']
         }
     ]
     utilService.saveToStorage(STORAGE_KEY, bugs)

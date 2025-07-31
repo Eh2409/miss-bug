@@ -1,0 +1,52 @@
+.label-select {
+    position: relative;
+
+
+    .labels-prev {
+        cursor: pointer;
+        display: block;
+
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        max-width: 100%;
+
+
+        span {
+            display: block;
+
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            text-transform: capitalize;
+        }
+    }
+
+    .label-selection-box {
+        width: 100%;
+        position: absolute;
+        top: 80%;
+        display: grid;
+        z-index: 2;
+
+        opacity: 0;
+        pointer-events: none;
+
+        transition: 200ms ease-in-out;
+
+        &.box-open {
+            opacity: 1;
+            pointer-events: visible;
+        }
+
+        label {
+            cursor: pointer;
+            background-color: var(--bg3);
+            text-transform: capitalize;
+
+            &:hover {
+                filter: brightness(1.2);
+            }
+        }
+    }
+}

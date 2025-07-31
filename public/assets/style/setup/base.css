@@ -50,6 +50,7 @@ pre {
     font-family: inherit;
 }
 
+.input,
 input,
 textarea {
     margin-block-end: 1em;

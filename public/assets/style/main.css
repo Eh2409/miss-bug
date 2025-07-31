@@ -13,6 +13,7 @@
 @import './cmps/AppHeader.css';
 @import './cmps/AppFooter.css';
 @import './cmps/UserMsg.css';
+@import './cmps/LabelSelect.css';
 
 @import './cmps/bug/BugList.css';
 @import './cmps/bug/BugFilter.css';
