@@ -1,3 +1,4 @@
+import path from 'path'
 import express from 'express'
 
 import { bugService } from './services/bug.service.js'
@@ -5,6 +6,7 @@ import { loggerService } from './services/logger.service.js'
 import { generatePdf } from './services/pdf.service.js'
 
 const app = express()
+
 app.use(express.static('public'))
 app.use(express.json())
 
@@ -122,8 +124,8 @@ app.get('/api/bug/:bugId', (req, res) => {
         })
 })
 
-app.get('/', (req, res) => {
-    res.send('Hello World')
+app.get('/*all', (req, res) => {
+    res.sendFile(path.resolve('public/index.html'))
 })
 
 const port = 3030
