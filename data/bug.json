@@ -1,19 +1,5 @@
 [
   {
-    "title": "eliad kaka",
-    "description": "3",
-    "severity": 3,
-    "_id": "dbHFvh",
-    "createdAt": 1753928762462
-  },
-  {
-    "title": "3",
-    "description": "3",
-    "severity": 3,
-    "_id": "8f3Sc7",
-    "createdAt": 1753928743897
-  },
-  {
     "_id": "abc123",
     "title": "Cannot save a new car",
     "description": "problem when clicking Save",

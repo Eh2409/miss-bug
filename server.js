@@ -1,5 +1,6 @@
 import path from 'path'
 import express from 'express'
+import cookieParse from 'cookie-parser'
 
 import { bugService } from './services/bug.service.js'
 import { loggerService } from './services/logger.service.js'
@@ -9,6 +10,7 @@ const app = express()
 
 app.use(express.static('public'))
 app.use(express.json())
+app.use(cookieParse())
 
 
 app.get('/api/bug', (req, res) => {
@@ -115,6 +117,22 @@ app.delete('/api/bug/:bugId', (req, res) => {
 
 app.get('/api/bug/:bugId', (req, res) => {
     const { bugId } = req.params
+
+    var visitedBugs = req.cookies.visitedBugs || []
+
+    if (visitedBugs.length >= 3) {
+
+        return res.status(401).send('Wait for a bit')
+
+    } else if (!visitedBugs.includes(bugId)) {
+
+        visitedBugs.push(bugId)
+        res.cookie('visitedBugs', visitedBugs, { maxAge: 10 * 1000 })
+
+    }
+
+    console.log(`bugs watched [${visitedBugs}]`);
+
 
     bugService.getById(bugId)
         .then(bug => res.send(bug))
