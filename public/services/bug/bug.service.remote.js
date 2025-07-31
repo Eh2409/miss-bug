@@ -10,9 +10,7 @@ export const bugService = {
 
 
 function query(filterBy = {}) {
-    const { txt, minSeverity } = filterBy
-    const queryStr = `?txt=${txt}&minSeverity=${minSeverity}`
-    return axios.get(BASE_URL + queryStr)
+    return axios.get(BASE_URL, { params: filterBy })
         .then(res => res.data)
 }
 
@@ -22,14 +20,15 @@ function getById(bugId) {
 }
 
 function remove(bugId) {
-    return axios.get(BASE_URL + '/' + bugId + '/remove')
+    return axios.delete(BASE_URL + '/' + bugId)
         .then(res => res.data)
 }
 
 function save(bug) {
-    const { _id, title, description, severity, createdAt } = bug
-    const queryStr = `?_id=${_id || ''}&title=${title}&description=${description}&severity=${severity}&createdAt=${createdAt || ''}`
-    return axios.get(BASE_URL + '/save' + queryStr)
+    const method = bug._id ? 'put' : 'post'
+    const bugId = bug._id || ''
+
+    return axios[method](BASE_URL + '/' + bugId, bug)
         .then(res => res.data)
 }
 

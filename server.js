@@ -6,6 +6,7 @@ import { generatePdf } from './services/pdf.service.js'
 
 const app = express()
 app.use(express.static('public'))
+app.use(express.json())
 
 
 app.get('/api/bug', (req, res) => {
@@ -44,10 +45,40 @@ app.get('/api/bug/pdf', (req, res) => {
         })
 })
 
-app.get('/api/bug/save', (req, res) => {
-    const { _id, title, description, severity, createdAt } = req.query
+app.post('/api/bug', (req, res) => {
+    const bug = req.body
+
+    const { title, description, severity } = bug
 
     if (!title || !description || !severity) {
+        res.status(400).send('Required fields are missing')
+    }
+
+    const bugToSave = {
+        title,
+        description,
+        severity: +severity,
+    }
+
+    console.log(bugToSave);
+
+    bugService.add(bugToSave)
+        .then(savedBug => res.send(savedBug))
+        .catch(err => {
+            loggerService.error(err)
+            res.status(400).send(err)
+        })
+})
+
+app.put('/api/bug/:bugId', (req, res) => {
+    console.log('req:', req)
+
+    const { body: bug } = req
+    console.log('bug:', bug)
+
+    const { _id, title, description, severity, createdAt } = bug
+
+    if (!_id || !title || !description || !severity) {
         res.status(400).send('Required fields are missing')
     }
 
@@ -61,7 +92,7 @@ app.get('/api/bug/save', (req, res) => {
 
     console.log(bugToSave);
 
-    bugService.save(bugToSave)
+    bugService.update(bugToSave)
         .then(savedBug => res.send(savedBug))
         .catch(err => {
             loggerService.error(err)
@@ -69,7 +100,7 @@ app.get('/api/bug/save', (req, res) => {
         })
 })
 
-app.get('/api/bug/:bugId/remove', (req, res) => {
+app.delete('/api/bug/:bugId', (req, res) => {
     const { bugId } = req.params
 
     bugService.remove(bugId)

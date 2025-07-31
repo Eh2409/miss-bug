@@ -7,7 +7,8 @@ export const bugService = {
     query,
     getById,
     remove,
-    save,
+    add,
+    update
 }
 
 const bugs = readJsonFile('data/bug.json')
@@ -48,20 +49,21 @@ function remove(bugId) {
     return _saveBugs()
 }
 
-function save(bugToSave) {
-    if (bugToSave._id) {
-        const idx = bugs.findIndex(bug => bug._id === bugToSave._id)
+function add(bugToSave) {
+    bugToSave._id = makeId()
+    bugToSave.createdAt = Date.now()
+    bugs.unshift(bugToSave)
+    return _saveBugs().then(() => bugToSave)
+}
 
-        if (idx === -1) {
-            loggerService.error(`Cannot find bug ${bugToSave._id}`)
-            return Promise.reject(`Cannot update bug`)
-        }
-        bugs[idx] = { ...bugs[idx], ...bugToSave }
-    } else {
-        bugToSave._id = makeId()
-        bugToSave.createdAt = Date.now()
-        bugs.unshift(bugToSave)
+function update(bugToSave) {
+    const idx = bugs.findIndex(bug => bug._id === bugToSave._id)
+
+    if (idx === -1) {
+        loggerService.error(`Cannot find bug ${bugToSave._id}`)
+        return Promise.reject(`Cannot update bug`)
     }
+    bugs[idx] = { ...bugs[idx], ...bugToSave }
     return _saveBugs().then(() => bugToSave)
 }
 
