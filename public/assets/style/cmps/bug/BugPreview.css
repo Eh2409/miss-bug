@@ -1,5 +1,8 @@
 .bug-preview {
-    display: flex;
+    display: grid;
+    grid-template-rows: subgrid;
+    grid-row: 2 span;
+
     flex-direction: column;
     gap: .6em;
 }
