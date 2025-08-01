@@ -1,5 +1,5 @@
 const { useState, useEffect, useRef } = React
-const { Link } = ReactRouterDOM
+const { useSearchParams, Link } = ReactRouterDOM
 
 import { bugService } from '../services/bug/index.js'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
@@ -8,16 +8,23 @@ import { BugFilter } from '../cmps/bug/BugFilter.jsx'
 import { BugList } from '../cmps/bug/BugList.jsx'
 import { BugSort } from '../cmps/bug/BugSort.jsx'
 import { Pagination } from '../cmps/Pagination.jsx'
+import { utilService } from '../services/util.service.js'
 
 export function BugIndex() {
     const [bugs, setBugs] = useState(null)
-    const [filterBy, setFilterBy] = useState(bugService.getDefaultFilter())
+
+    const [searchParams, setSearchParams] = useSearchParams()
+    const [filterBy, setFilterBy] = useState(bugService.getFilterFromSearchParams(searchParams))
+
+
     const [maxPageCount, setMaxPageCount] = useState(0)
+    const [isFirstRender, setIsFirstRender] = useState(true)
 
     const [isFilterPopupOpen, setIsFilterPopupOpen] = useState(null)
     const [activeFilterOptionsCount, setActiveFilterOptionsCount] = useState(0)
 
     useEffect(() => {
+        setSearchParams(utilService.cleanSearchParams(filterBy))
         onCountActiveFilterOptions(filterBy)
         loadBugs()
     }, [filterBy])
@@ -42,10 +49,15 @@ export function BugIndex() {
     }
 
     function onSetFilterBy(filterBy) {
+
         setFilterBy(prevFilter => ({
-            ...prevFilter, ...filterBy
-            , pageIdx: prevFilter.pageIdx !== undefined ? 0 : undefined
+            ...prevFilter, ...filterBy,
+            pageIdx: isFirstRender ? prevFilter.pageIdx : (prevFilter.pageIdx !== undefined ? 0 : undefined)
         }))
+
+        if (isFirstRender) {
+            setIsFirstRender(false)
+        }
     }
 
     function setPageIdx(pageNum) {

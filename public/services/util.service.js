@@ -3,7 +3,8 @@ export const utilService = {
     makeLorem,
     getRandomIntInclusive,
     loadFromStorage,
-    saveToStorage
+    saveToStorage,
+    cleanSearchParams
 }
 
 function makeId(length = 6) {
@@ -42,4 +43,19 @@ function loadFromStorage(keyDB) {
 function saveToStorage(keyDB, val) {
     const valStr = JSON.stringify(val)
     localStorage.setItem(keyDB, valStr)
+}
+
+function cleanSearchParams(searchParams) {
+
+    const cleanedParams = {}
+
+    for (const field in searchParams) {
+        if (field === 'pageIdx') {
+            cleanedParams[field] = searchParams[field]
+        } else if (searchParams[field]) {
+            cleanedParams[field] = searchParams[field]
+        }
+    }
+
+    return cleanedParams
 }

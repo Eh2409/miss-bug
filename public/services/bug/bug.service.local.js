@@ -2,7 +2,7 @@ import { utilService } from '../util.service.js'
 import { storageService } from '../async-storage.service.js'
 
 const STORAGE_KEY = 'bugs'
-const PAGE_SIZE = 8
+const PAGE_SIZE = 1
 
 _createBugs()
 

@@ -25,9 +25,33 @@ function getEmptyBug() {
         labels: []
     }
 }
+
 function getBugLabels() {
     return ['critical', 'need-CR', 'dev-branch']
 }
 
+function getFilterFromSearchParams(searchParams) {
+
+    const defaultFilter = getDefaultFilter()
+    const filterBy = {}
+
+    for (const field in defaultFilter) {
+        if (field === 'pageIdx') {
+            const pageIdxRes = searchParams.get(`pageIdx`) || defaultFilter[field]
+            filterBy.pageIdx = (pageIdxRes !== 'undefined' && pageIdxRes !== undefined) ? +pageIdxRes : defaultFilter[field]
+        } else if (field === 'labels') {
+            filterBy[field] = searchParams.getAll('labels') || defaultFilter[field]
+        } else if (field === 'dir') {
+            filterBy[field] = +searchParams.get(`dir`) || defaultFilter[field]
+        } else {
+            filterBy[field] = searchParams.get(`${field}`) || defaultFilter[field]
+        }
+    }
+
+    return filterBy
+
+}
+
+
 const service = isRemote ? remote : local
-export const bugService = { getDefaultFilter, getEmptyBug, getBugLabels, ...service }
+export const bugService = { getDefaultFilter, getEmptyBug, getBugLabels, getFilterFromSearchParams, ...service }
