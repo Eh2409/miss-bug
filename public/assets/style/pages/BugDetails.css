@@ -1,6 +1,7 @@
 .bug-details {
 
-    h3 {
+    h3,
+    h4 {
         margin-block-end: 1em;
     }
 
@@ -28,6 +29,18 @@
             15px 20px 10px rgba(0, 0, 0, 0.05),
             15px 20px 20px rgba(0, 0, 0, 0.05),
             inset -10px -10px 15px rgba(255, 255, 255, 0.08);
+
+        .bug-labels {
+            display: flex;
+            justify-content: start;
+            align-items: start;
+            flex-wrap: wrap;
+
+            &>* {
+                white-space: nowrap;
+                cursor: auto;
+            }
+        }
 
     }
 

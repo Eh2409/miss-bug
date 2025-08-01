@@ -48,6 +48,7 @@ button,
 
 pre {
     font-family: inherit;
+    white-space: normal;
 }
 
 .input,
