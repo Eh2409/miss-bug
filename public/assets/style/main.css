@@ -14,6 +14,7 @@
 @import './cmps/AppFooter.css';
 @import './cmps/UserMsg.css';
 @import './cmps/LabelSelect.css';
+@import './cmps/Pagination.css';
 
 @import './cmps/bug/BugList.css';
 @import './cmps/bug/BugFilter.css';

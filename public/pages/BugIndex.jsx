@@ -7,10 +7,13 @@ import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
 import { BugFilter } from '../cmps/bug/BugFilter.jsx'
 import { BugList } from '../cmps/bug/BugList.jsx'
 import { BugSort } from '../cmps/bug/BugSort.jsx'
+import { Pagination } from '../cmps/Pagination.jsx'
 
 export function BugIndex() {
     const [bugs, setBugs] = useState(null)
     const [filterBy, setFilterBy] = useState(bugService.getDefaultFilter())
+    const [maxPageCount, setMaxPageCount] = useState(0)
+
     const [isFilterPopupOpen, setIsFilterPopupOpen] = useState(null)
     const [activeFilterOptionsCount, setActiveFilterOptionsCount] = useState(0)
 
@@ -21,7 +24,10 @@ export function BugIndex() {
 
     function loadBugs() {
         bugService.query(filterBy)
-            .then(setBugs)
+            .then(({ bugs, maxPageCount }) => {
+                setBugs(bugs)
+                setMaxPageCount(maxPageCount)
+            })
             .catch(err => showErrorMsg(`Couldn't load bugs - ${err}`))
     }
 
@@ -36,7 +42,14 @@ export function BugIndex() {
     }
 
     function onSetFilterBy(filterBy) {
-        setFilterBy(prevFilter => ({ ...prevFilter, ...filterBy }))
+        setFilterBy(prevFilter => ({
+            ...prevFilter, ...filterBy
+            , pageIdx: prevFilter.pageIdx !== undefined ? 0 : undefined
+        }))
+    }
+
+    function setPageIdx(pageNum) {
+        setFilterBy(prevFilter => ({ ...prevFilter, pageIdx: pageNum }))
     }
 
     function onMakePdf() {
@@ -67,7 +80,7 @@ export function BugIndex() {
     function onCountActiveFilterOptions(filter) {
 
         const count = Object.entries(filter).filter(([key, val]) => {
-            if (key === 'sortType' || key === 'dir') return
+            if (key === 'sortType' || key === 'dir' || key === 'pageIdx') return
             if (key === 'labels') return Array.isArray(val) && val.length > 0
             else return val
         }).length
@@ -75,7 +88,13 @@ export function BugIndex() {
         setActiveFilterOptionsCount(count)
     }
 
-    const { txt, minSeverity, labels, sortType, dir } = filterBy
+    function togglePagination({ target }) {
+        const pageIdx = target.checked ? 0 : undefined
+
+        setFilterBy(prevFilter => ({ ...prevFilter, pageIdx: pageIdx }))
+    }
+
+    const { txt, minSeverity, labels, sortType, dir, pageIdx } = filterBy
 
     return <section className="bug-index">
 
@@ -110,5 +129,22 @@ export function BugIndex() {
         <BugList
             bugs={bugs}
             onRemoveBug={onRemoveBug} />
+
+        {bugs && !bugs.length && <div className='no-bug-msg'>No Bugs found</div>}
+
+        {(maxPageCount !== 0 && pageIdx !== undefined) && < Pagination
+            maxPageCount={maxPageCount}
+            pageIdx={pageIdx}
+            setPageIdx={setPageIdx}
+        />}
+
+        {bugs && bugs.length > 0 && <div className='Pagination-toggle'>
+            <span>{pageIdx !== undefined ? 'Pagination: On' : 'Pagination: Off'}</span>
+            <label className="switch">
+                <input type="checkbox" checked={pageIdx !== undefined} onChange={togglePagination} />
+                <span className="slider round"></span>
+            </label>
+        </div>}
+
     </section>
 }

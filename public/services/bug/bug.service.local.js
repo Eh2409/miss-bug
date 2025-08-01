@@ -2,6 +2,7 @@ import { utilService } from '../util.service.js'
 import { storageService } from '../async-storage.service.js'
 
 const STORAGE_KEY = 'bugs'
+const PAGE_SIZE = 8
 
 _createBugs()
 
@@ -47,7 +48,16 @@ function query(filterBy) {
                 }
             }
 
-            return bugs
+
+            const maxPageCount = Math.ceil(bugs.length / PAGE_SIZE)
+
+
+            if (filterBy.pageIdx !== undefined) {
+                const startIdx = filterBy.pageIdx * PAGE_SIZE
+                bugs = bugs.slice(startIdx, startIdx + PAGE_SIZE)
+            }
+
+            return { bugs, maxPageCount }
         })
 }
 

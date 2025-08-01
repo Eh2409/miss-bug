@@ -12,7 +12,8 @@ function getDefaultFilter() {
         minSeverity: 0,
         labels: [],
         sortType: 'createdAt',
-        dir: -1
+        dir: -1,
+        pageIdx: undefined
     }
 }
 
