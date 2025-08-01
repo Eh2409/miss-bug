@@ -2,7 +2,7 @@ import { utilService } from '../util.service.js'
 import { storageService } from '../async-storage.service.js'
 
 const STORAGE_KEY = 'bugs'
-const PAGE_SIZE = 1
+const PAGE_SIZE = 8
 
 _createBugs()
 
@@ -29,11 +29,7 @@ function query(filterBy) {
 
             if (filterBy.labels.length > 0) {
                 bugs = bugs.filter(bug => {
-                    if (filterBy.labels.length > 1) {
-                        return bug.labels.every(label => filterBy.labels.includes(label))
-                    } else {
-                        return bug.labels.some(label => filterBy.labels.includes(label))
-                    }
+                    return bug.labels.some(label => filterBy.labels.includes(label))
                 })
             }
 

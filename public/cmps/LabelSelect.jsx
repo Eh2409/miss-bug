@@ -9,12 +9,14 @@ export function LabelSelect({ bugLabels, onSaveLabels, labelOptions }) {
     const labelInputRef = useRef()
 
     useEffect(() => {
-        setLabels(bugLabels)
+        if (bugLabels) {
+            setLabels(bugLabels)
+        }
     }, [])
 
     // for if filter reset
     useEffect(() => {
-        if (bugLabels.length === 0 && labels.length > 0) {
+        if (bugLabels && bugLabels.length === 0 && labels.length > 0) {
             setLabels(bugLabels)
         }
     }, [bugLabels])
@@ -69,7 +71,7 @@ export function LabelSelect({ bugLabels, onSaveLabels, labelOptions }) {
 
             <div className="input labels-prev" onClick={toggleIsLabelsBoxOpen} ref={labelInputRef}>
                 <span>
-                    {labels.length > 0 ? labels.join(", ") : 'Select Labels'}
+                    {labels && labels.length > 0 ? labels.join(", ") : 'Select Labels'}
                 </span>
             </div>
 

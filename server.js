@@ -8,6 +8,8 @@ import { generatePdf } from './services/pdf.service.js'
 
 const app = express()
 
+app.set('query parser', 'extended')
+
 app.use(express.static('public'))
 app.use(express.json())
 app.use(cookieParse())
@@ -18,10 +20,14 @@ app.get('/api/bug', (req, res) => {
     const filterBy = {
         txt: req.query.txt || '',
         minSeverity: +req.query.minSeverity || 0,
+        labels: req.query.labels || [],
+        sortType: req.query.sortType || 'new',
+        dir: +req.query.dir || -1,
+        pageIdx: req.query.pageIdx !== 'undefined' ? req.query.pageIdx : undefined
     }
 
     bugService.query(filterBy)
-        .then(bugs => res.send(bugs))
+        .then(data => res.send(data))
         .catch(err => {
             loggerService.error(err)
             res.status(400).send(err)
@@ -52,7 +58,7 @@ app.get('/api/bug/pdf', (req, res) => {
 app.post('/api/bug', (req, res) => {
     const bug = req.body
 
-    const { title, description, severity } = bug
+    const { title, description, severity, labels } = bug
 
     if (!title || !description || !severity) {
         res.status(400).send('Required fields are missing')
@@ -62,6 +68,7 @@ app.post('/api/bug', (req, res) => {
         title,
         description,
         severity: +severity,
+        labels,
     }
 
     console.log(bugToSave);
@@ -80,7 +87,7 @@ app.put('/api/bug/:bugId', (req, res) => {
     const { body: bug } = req
     console.log('bug:', bug)
 
-    const { _id, title, description, severity, createdAt } = bug
+    const { _id, title, description, severity, createdAt, labels } = bug
 
     if (!_id || !title || !description || !severity) {
         res.status(400).send('Required fields are missing')
@@ -91,7 +98,8 @@ app.put('/api/bug/:bugId', (req, res) => {
         title,
         description,
         severity: +severity,
-        createdAt: +createdAt
+        createdAt: +createdAt,
+        labels,
     }
 
     console.log(bugToSave);

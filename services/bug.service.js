@@ -13,6 +13,8 @@ export const bugService = {
 
 const bugs = readJsonFile('data/bug.json')
 
+const PAGE_SIZE = 8
+
 function query(filterBy = {}) {
     return Promise.resolve(bugs)
         .then(bugs => {
@@ -27,7 +29,34 @@ function query(filterBy = {}) {
                 filteredBugs = filteredBugs.filter(bug => bug.severity >= filterBy.minSeverity)
             }
 
-            return filteredBugs
+            if (filterBy.labels.length > 0) {
+                filteredBugs = filteredBugs.filter(bug => {
+                    return bug.labels.some(label => filterBy.labels.includes(label))
+                })
+            }
+
+            if (filterBy.sortType && filterBy.dir) {
+
+                if (filterBy.sortType === 'severity') {
+                    filteredBugs = filteredBugs.sort((b1, b2) => (b1.severity - b2.severity) * filterBy.dir)
+                } else if (filterBy.sortType === 'createdAt') {
+                    filteredBugs = filteredBugs.sort((b1, b2) => (b1.createdAt - b2.createdAt) * filterBy.dir)
+                } else if (filterBy.sortType === 'title') {
+                    filteredBugs = filteredBugs.sort((b1, b2) => (b1.title.localeCompare(b2.title)) * filterBy.dir)
+                }
+            }
+
+
+            const maxPageCount = Math.ceil(filteredBugs.length / PAGE_SIZE)
+
+
+            if (filterBy.pageIdx !== undefined) {
+                const startIdx = filterBy.pageIdx * PAGE_SIZE
+                filteredBugs = filteredBugs.slice(startIdx, startIdx + PAGE_SIZE)
+            }
+
+
+            return { bugs: filteredBugs, maxPageCount }
         })
 }
 

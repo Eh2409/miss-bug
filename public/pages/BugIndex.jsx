@@ -16,6 +16,8 @@ export function BugIndex() {
     const [searchParams, setSearchParams] = useSearchParams()
     const [filterBy, setFilterBy] = useState(bugService.getFilterFromSearchParams(searchParams))
 
+    console.log('filterBy:', filterBy)
+
 
     const [maxPageCount, setMaxPageCount] = useState(0)
     const [isFirstRender, setIsFirstRender] = useState(true)
