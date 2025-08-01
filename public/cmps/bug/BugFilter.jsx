@@ -1,4 +1,5 @@
 import { bugService } from "../../services/bug/index.js"
+import { LabelSelect } from "../LabelSelect.jsx"
 
 const { useState, useEffect, useRef } = React
 
@@ -6,9 +7,9 @@ export function BugFilter({ filterBy, onSetFilterBy, toggleIsFilterPopupOpen }) 
 
     const [filterByToEdit, setFilterByToEdit] = useState(filterBy)
     const [filterOptions, setFilterOptions] = useState([])
+
     const defaultFilterRef = useRef(bugService.getDefaultFilter())
 
-    bugService
     useEffect(() => {
         onSetFilterBy(filterByToEdit)
     }, [filterByToEdit])
@@ -56,7 +57,18 @@ export function BugFilter({ filterBy, onSetFilterBy, toggleIsFilterPopupOpen }) 
         setFilterByToEdit(defaultFilterRef.current)
     }
 
-    const { txt, minSeverity } = filterByToEdit
+
+    function onSaveLabels(labelsToSave) {
+
+        const sortedCurrent = [...filterByToEdit.labels].sort()
+        const sortedNew = [...labelsToSave].sort()
+
+        if (JSON.stringify(sortedCurrent) === JSON.stringify(sortedNew)) return
+
+        setFilterByToEdit(prev => ({ ...prev, labels: labelsToSave }))
+    }
+
+    const { txt, minSeverity, labels } = filterByToEdit
     return (
         <section className="bug-filter" onClick={(event) => { event.stopPropagation() }}>
 
@@ -93,6 +105,20 @@ export function BugFilter({ filterBy, onSetFilterBy, toggleIsFilterPopupOpen }) 
                             <input value={minSeverity || ''} onChange={handleChange} type="number" placeholder="By Min Severity" id="minSeverity" name="minSeverity" />
                         </div>
                     </div>
+                </div>
+
+                <div className="label">
+
+                    <div className="label-content">
+                        <span>Labels</span>
+                    </div>
+
+                    <LabelSelect
+                        bugLabels={labels}
+                        onSaveLabels={onSaveLabels}
+                        labelOptions={bugService.getBugLabels()}
+
+                    />
                 </div>
 
                 <button type="button" onClick={onRestFilter}>Reset</button>

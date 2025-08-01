@@ -12,6 +12,13 @@ export function LabelSelect({ bugLabels, onSaveLabels, labelOptions }) {
         setLabels(bugLabels)
     }, [])
 
+    // for if filter reset
+    useEffect(() => {
+        if (bugLabels.length === 0 && labels.length > 0) {
+            setLabels(bugLabels)
+        }
+    }, [bugLabels])
+
     useEffect(() => {
         if (isLabelsBoxOpen) {
             addEventListener('mousedown', handleClickOutside)
@@ -29,7 +36,7 @@ export function LabelSelect({ bugLabels, onSaveLabels, labelOptions }) {
 
         if (target !== selectionBoxRef.current && !selectionBoxRef.current.contains(target)) {
 
-            if (target !== labelInputRef.current) setIsLabelsBoxOpen(false)
+            if (target !== labelInputRef.current && !labelInputRef.current.contains(target)) setIsLabelsBoxOpen(false)
             submitLabels()
         }
     }

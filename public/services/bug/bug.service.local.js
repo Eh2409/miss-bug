@@ -26,6 +26,16 @@ function query(filterBy) {
                 bugs = bugs.filter(bug => bug.severity >= filterBy.minSeverity)
             }
 
+            if (filterBy.labels.length > 0) {
+                bugs = bugs.filter(bug => {
+                    if (filterBy.labels.length > 1) {
+                        return bug.labels.every(label => filterBy.labels.includes(label))
+                    } else {
+                        return bug.labels.some(label => filterBy.labels.includes(label))
+                    }
+                })
+            }
+
             return bugs
         })
 }

@@ -64,7 +64,12 @@ export function BugIndex() {
     }
 
     function onCountActiveFilterOptions(filter) {
-        const count = Object.values(filter).filter(val => val).length
+
+        const count = Object.entries(filter).filter(([key, val]) => {
+            if (key === 'labels') return Array.isArray(val) && val.length > 0
+            else return val
+        }).length
+
         setActiveFilterOptionsCount(count)
     }
 
