@@ -54,7 +54,8 @@ export function BugFilter({ filterBy, onSetFilterBy, toggleIsFilterPopupOpen }) 
     }
 
     function onRestFilter() {
-        setFilterByToEdit(defaultFilterRef.current)
+        const { txt, minSeverity, labels } = defaultFilterRef.current
+        setFilterByToEdit({ txt, minSeverity, labels })
     }
 
 

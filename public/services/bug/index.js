@@ -7,7 +7,13 @@ import { bugService as remote } from "./bug.service.remote.js"
 const isRemote = false
 
 function getDefaultFilter() {
-    return { txt: '', minSeverity: 0, labels: [] }
+    return {
+        txt: '',
+        minSeverity: 0,
+        labels: [],
+        sortType: 'createdAt',
+        dir: -1
+    }
 }
 
 function getEmptyBug() {

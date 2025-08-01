@@ -6,6 +6,7 @@ import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
 
 import { BugFilter } from '../cmps/bug/BugFilter.jsx'
 import { BugList } from '../cmps/bug/BugList.jsx'
+import { BugSort } from '../cmps/bug/BugSort.jsx'
 
 export function BugIndex() {
     const [bugs, setBugs] = useState(null)
@@ -66,6 +67,7 @@ export function BugIndex() {
     function onCountActiveFilterOptions(filter) {
 
         const count = Object.entries(filter).filter(([key, val]) => {
+            if (key === 'sortType' || key === 'dir') return
             if (key === 'labels') return Array.isArray(val) && val.length > 0
             else return val
         }).length
@@ -73,10 +75,13 @@ export function BugIndex() {
         setActiveFilterOptionsCount(count)
     }
 
+    const { txt, minSeverity, labels, sortType, dir } = filterBy
+
     return <section className="bug-index">
 
         <header>
             <div className="bug-toolbar">
+
                 <div className="btns">
                     <Link to='/bug/edit'><button>Add Bug</button></Link>
                     <button onClick={onMakePdf} title="create bugs pdf">
@@ -84,14 +89,17 @@ export function BugIndex() {
                     </button>
                 </div>
 
-                <button className="bug-filter-btn" onClick={toggleIsFilterPopupOpen}>
-                    Filter {activeFilterOptionsCount > 0 ? `(${activeFilterOptionsCount})` : ''}
-                </button>
+                <div className='filter-options'>
+                    <BugSort sortBy={{ sortType, dir }} onSetFilterBy={onSetFilterBy} />
+                    <button className="bug-filter-btn" onClick={toggleIsFilterPopupOpen}>
+                        Filter {activeFilterOptionsCount > 0 ? `(${activeFilterOptionsCount})` : ''}
+                    </button>
+                </div>
 
 
                 <div className={`bug-filter-black-wrapper ${isFilterPopupOpen ? "open" : ""}`} onClick={toggleIsFilterPopupOpen}>
                     <BugFilter
-                        filterBy={filterBy}
+                        filterBy={{ txt, minSeverity, labels, }}
                         onSetFilterBy={onSetFilterBy}
                         toggleIsFilterPopupOpen={toggleIsFilterPopupOpen}
                     />

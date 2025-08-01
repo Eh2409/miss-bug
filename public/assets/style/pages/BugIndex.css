@@ -6,6 +6,7 @@
 
         .bug-toolbar {
             display: flex;
+            flex-direction: column;
             justify-content: space-between;
             align-items: center;
 
@@ -15,8 +16,14 @@
                 align-items: center;
             }
 
-            .bug-filter-btn {
-                position: relative;
+            .filter-options {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                .bug-filter-btn {
+                    position: relative;
+                }
             }
 
             .bug-filter-black-wrapper {
@@ -56,4 +63,16 @@
         }
     }
 
+}
+
+
+@media (min-width: 700px) {
+    .bug-index {
+
+        header {
+            .bug-toolbar {
+                flex-direction: row;
+            }
+        }
+    }
 }
