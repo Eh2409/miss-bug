@@ -6,6 +6,7 @@ import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
 
 import { BugFilter } from '../cmps/bug/BugFilter.jsx'
 import { BugList } from '../cmps/bug/BugList.jsx'
+import { BugLoader } from '../cmps/bug/BugLoader.jsx'
 import { BugSort } from '../cmps/bug/BugSort.jsx'
 import { Pagination } from '../cmps/Pagination.jsx'
 import { utilService } from '../services/util.service.js'
@@ -16,14 +17,13 @@ export function BugIndex() {
     const [searchParams, setSearchParams] = useSearchParams()
     const [filterBy, setFilterBy] = useState(bugService.getFilterFromSearchParams(searchParams))
 
-    console.log('filterBy:', filterBy)
-
-
     const [maxPageCount, setMaxPageCount] = useState(0)
     const [isFirstRender, setIsFirstRender] = useState(true)
 
     const [isFilterPopupOpen, setIsFilterPopupOpen] = useState(null)
     const [activeFilterOptionsCount, setActiveFilterOptionsCount] = useState(0)
+
+    const [isbugsLoading, setIsbugsLoading] = useState({ isLoading: false, isFiretTime: true })
 
     useEffect(() => {
         setSearchParams(utilService.cleanSearchParams(filterBy))
@@ -32,12 +32,33 @@ export function BugIndex() {
     }, [filterBy])
 
     function loadBugs() {
+        const start = performance.now()
+        setIsbugsLoading(prev => ({ ...prev, isLoading: true }))
+
         bugService.query(filterBy)
             .then(({ bugs, maxPageCount }) => {
                 setBugs(bugs)
                 setMaxPageCount(maxPageCount)
+
+                const end = performance.now()
+                const duration = ((end - start) / 1000).toFixed(2)
+
+                if (isbugsLoading.isFiretTime && +duration < 0.5) {
+                    setTimeout(() => {
+                        setIsbugsLoading(prev => ({ isLoading: false, isFiretTime: false }))
+                    }, 500)
+                } else if (isbugsLoading.isFiretTime) {
+                    setIsbugsLoading(prev => ({ isLoading: false, isFiretTime: false }))
+                } else {
+                    setIsbugsLoading(prev => ({ ...prev, isLoading: false }))
+                }
+
             })
-            .catch(err => showErrorMsg(`Couldn't load bugs - ${err}`))
+            .catch(err => {
+                showErrorMsg(`Couldn't load bugs - ${err}`)
+                setIsbugsLoading(prev => ({ isLoading: false, isFiretTime: false }))
+            })
+
     }
 
     function onRemoveBug(bugId) {
@@ -140,11 +161,15 @@ export function BugIndex() {
             </div>
         </header>
 
-        <BugList
+
+        {bugs && !isbugsLoading.isLoading ? <BugList
             bugs={bugs}
             onRemoveBug={onRemoveBug} />
+            : <BugLoader />
+        }
 
         {bugs && !bugs.length && <div className='no-bug-msg'>No Bugs found</div>}
+
 
         {(maxPageCount !== 0 && pageIdx !== undefined) && < Pagination
             maxPageCount={maxPageCount}

@@ -27,6 +27,15 @@
         15px 20px 20px rgba(0, 0, 0, 0.05),
         inset -10px -10px 15px rgba(255, 255, 255, 0.05);
 
+    .actions {
+        display: flex;
+        gap: .3em;
+
+        &>*:last-child {
+            margin-inline-start: auto;
+        }
+    }
+
     &::before {
         content: "";
         position: absolute;
@@ -49,13 +58,7 @@
             transform: skewX(-20deg);
         }
     }
-}
 
-.bug-list .actions {
-    display: flex;
-    gap: .3em;
-}
 
-.bug-list .actions button:last-child {
-    margin-inline-start: auto;
+
 }

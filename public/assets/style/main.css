@@ -15,7 +15,9 @@
 @import './cmps/UserMsg.css';
 @import './cmps/LabelSelect.css';
 @import './cmps/Pagination.css';
+@import './cmps/Loader.css';
 
 @import './cmps/bug/BugList.css';
 @import './cmps/bug/BugFilter.css';
 @import './cmps/bug/BugPreview.css';
+@import './cmps/bug/BugLaoder.css';

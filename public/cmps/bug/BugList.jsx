@@ -4,7 +4,6 @@ import { BugPreview } from './BugPreview.jsx'
 
 export function BugList({ bugs, onRemoveBug }) {
 
-    if (!bugs) return <div>Loading...</div>
     return <ul className="bug-list">
         {bugs.map(bug => (
             <li key={bug._id}>
