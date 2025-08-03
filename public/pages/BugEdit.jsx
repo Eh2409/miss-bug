@@ -2,6 +2,7 @@ const { useState, useEffect } = React
 const { useNavigate, useParams } = ReactRouterDOM
 
 import { LabelSelect } from "../cmps/LabelSelect.jsx"
+import { Loader } from "../cmps/Loader.jsx"
 import { bugService } from "../services/bug/index.js"
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js"
 
@@ -11,8 +12,6 @@ export function BugEdit(props) {
 
     const navigate = useNavigate()
     const [bugToEdit, setBugToEdit] = useState(bugService.getEmptyBug())
-
-    console.log('bugToEdit:', bugToEdit)
 
     useEffect(() => {
         if (bugId) {
@@ -55,7 +54,7 @@ export function BugEdit(props) {
         setBugToEdit(prev => ({ ...prev, labels: labelsToSave }))
     }
 
-    if (bugId && !bugToEdit._id) return 'Loading...'
+    if (bugId && !bugToEdit._id) return <Loader />
 
     const { title, description, severity, labels } = bugToEdit
     return (
