@@ -4,7 +4,8 @@ export const utilService = {
     getRandomIntInclusive,
     loadFromStorage,
     saveToStorage,
-    cleanSearchParams
+    cleanSearchParams,
+    debounce
 }
 
 function makeId(length = 6) {
@@ -59,3 +60,15 @@ function cleanSearchParams(searchParams) {
 
     return cleanedParams
 }
+
+function debounce(func, wait) {
+    let timeout
+    return (...args) => {
+        clearTimeout(timeout)
+        timeout = setTimeout(() => {
+            clearTimeout(timeout)
+            func(...args)
+        }, wait)
+    }
+}
+

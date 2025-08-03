@@ -1,4 +1,5 @@
 import { bugService } from "../../services/bug/index.js"
+import { utilService } from "../../services/util.service.js"
 import { LabelSelect } from "../LabelSelect.jsx"
 
 const { useState, useEffect, useRef } = React
@@ -7,11 +8,19 @@ export function BugFilter({ filterBy, onSetFilterBy, toggleIsFilterPopupOpen }) 
 
     const [filterByToEdit, setFilterByToEdit] = useState(filterBy)
     const [filterOptions, setFilterOptions] = useState([])
+    const [isFirstRender, setisFirstRender] = useState(true)
 
     const defaultFilterRef = useRef(bugService.getDefaultFilter())
+    const filterDebounce = useRef(utilService.debounce(onSetFilterBy, 1000))
 
     useEffect(() => {
-        onSetFilterBy(filterByToEdit)
+        if (isFirstRender) {
+            onSetFilterBy(filterByToEdit)
+            setisFirstRender(false)
+        } else {
+            filterDebounce.current(filterByToEdit)
+        }
+
     }, [filterByToEdit])
 
     function handleChange({ target }) {
