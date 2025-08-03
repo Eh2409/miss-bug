@@ -137,7 +137,7 @@ export function BugIndex() {
             <div className="bug-toolbar">
 
                 <div className="btns">
-                    <Link to='/bug/edit'><button>Add Bug</button></Link>
+                    <Link to='/bug/edit' className='btn'>Add Bug</Link>
                     <button onClick={onMakePdf} title="create bugs pdf">
                         <img src="../assets/img/pdf.svg" alt="pdf" className="icon" />
                     </button>

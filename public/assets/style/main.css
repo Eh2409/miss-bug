@@ -1,4 +1,5 @@
 @import './setup/reset.css';
+@import './setup/typography.css';
 @import './setup/vars.css';
 @import './setup/base.css';
 @import './setup/layout.css';

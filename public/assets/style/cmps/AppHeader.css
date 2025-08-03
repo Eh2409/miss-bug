@@ -1,4 +1,5 @@
 .app-header {
+
     padding-block: 1em;
     background-color: var(--bg4);
 
@@ -14,6 +15,8 @@
 
         justify-self: start;
         font-size: 2em;
+
+        font-family: raidercrusader, Arial, sans-serif;
 
         .bug-logo {
             width: 30px;
@@ -31,6 +34,8 @@
         display: flex;
         gap: 1em;
         justify-self: center;
+
+        font-family: Orbitron, Arial, sans-serif;
 
         a {
             border-block-end: 1px solid transparent;
