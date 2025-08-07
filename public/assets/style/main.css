@@ -19,6 +19,7 @@
 @import './cmps/Loader.css';
 @import './cmps/Popup.css';
 @import './cmps/LoginSignup.css';
+@import './cmps/UserMenu.css';
 
 @import './cmps/bug/BugList.css';
 @import './cmps/bug/BugFilter.css';

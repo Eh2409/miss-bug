@@ -32,7 +32,7 @@
             }
         }
 
-        nav {
+        .main-nav {
             display: flex;
             gap: 1em;
             align-items: center;
@@ -54,19 +54,32 @@
             display: none;
         }
 
-        .login-signup-btn {
-            justify-self: end;
+        .login-signup-wrapper {
+            position: relative;
 
-            .user-btn {
-                display: flex;
-                justify-content: center;
-                align-items: center;
+            .login-signup-btn {
+                justify-self: end;
 
-                .user-icon {
-                    margin-inline-end: 0.2em;
+                .user-btn {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                    .user-icon {
+                        margin-inline-end: 0.2em;
+                    }
                 }
             }
 
+            .user-menu-wrapper {
+                position: absolute;
+                top: 0;
+                left: 50%;
+                translate: -50%;
+
+                padding-block-start: 2.5em;
+                z-index: 15;
+            }
         }
     }
 }
@@ -110,7 +123,7 @@
 
             }
 
-            nav {
+            .main-nav {
                 position: fixed;
                 top: 0;
                 right: 0;

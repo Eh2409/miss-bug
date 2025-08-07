@@ -3,16 +3,34 @@ import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js"
 
 import { LoginSignup } from "./LoginSignup.jsx"
 import { Popup } from "./Popup.jsx"
+import { UserMenu } from "./UserMenu.jsx"
 
-const { useState } = React
+
+const { useState, useEffect, useRef } = React
 const { NavLink, Link } = ReactRouterDOM
 
 export function AppHeader() {
 
     const [loggedinUser, setLoggedinUser] = useState(userService.getLoggedinUser())
+
     const [isMobileNavOpen, setIsMobileNavOpen] = useState(false)
     const [isPopupOpen, setIsPopupOpen] = useState(false)
     const [isSignup, setIsSignup] = useState(false)
+    const [isUserMenuOpen, setIsUserMenuOpen] = useState(false)
+
+    const userMenuRef = useRef()
+
+    useEffect(() => {
+        if (isUserMenuOpen) {
+            addEventListener('mousedown', handleClickOutside)
+        } else {
+            removeEventListener('mousedown', handleClickOutside)
+        }
+
+        return (() => {
+            removeEventListener('mousedown', handleClickOutside)
+        })
+    }, [isUserMenuOpen])
 
     function toggleIsMobileNavOpen() {
         setIsMobileNavOpen(!isMobileNavOpen)
@@ -28,6 +46,17 @@ export function AppHeader() {
 
     function toggleIsSignup() {
         setIsSignup(!isSignup)
+    }
+
+    function toggleIsUserMenuOpen() {
+        setIsUserMenuOpen(!isUserMenuOpen)
+    }
+
+    function handleClickOutside({ target }) {
+        const elUserMenu = userMenuRef.current
+        if (elUserMenu && target !== elUserMenu && !elUserMenu.contains(target)) {
+            toggleIsUserMenuOpen()
+        }
     }
 
     /// auth
@@ -60,7 +89,7 @@ export function AppHeader() {
         userService.logout()
             .then(() => {
                 setLoggedinUser(null)
-                showSuccessMsg('logout successful!')
+                showSuccessMsg('Logout successful!')
             })
             .catch(err => {
                 showErrorMsg(`Couldn't Logout`)
@@ -79,23 +108,36 @@ export function AppHeader() {
                 onClick={toggleIsMobileNavOpen}>
             </div>
 
-            <nav className={isMobileNavOpen ? "open-nav" : ""}>
+            <nav className={`main-nav ${isMobileNavOpen ? "open-nav" : ""}`}>
                 <NavLink to="/" onClick={onCloseMobileNav}>Home</NavLink>
                 <NavLink to="/bug" onClick={onCloseMobileNav}>Bugs</NavLink>
                 <NavLink to="/about" onClick={onCloseMobileNav}>About</NavLink>
             </nav>
 
 
+            <div className="login-signup-wrapper">
+                <button onClick={() => { loggedinUser ? toggleIsUserMenuOpen() : toggleIsPopupOpen() }} className="login-signup-btn">
+                    {loggedinUser
+                        ? <div className="user-btn">
+                            {loggedinUser.username}
+                        </div>
+                        : <div className="user-btn" title="Login / Signup">
+                            <img src="/assets/img/user-icon.svg" alt="user icon" className="icon user-icon" />
+                            <span className="login-signup-str">Login / Signup</span>
+                        </div>
+                    }
+                </button>
 
-            <button onClick={toggleIsPopupOpen} className="login-signup-btn">
-                {loggedinUser
-                    ? <div className="user-btn">{loggedinUser.username}</div>
-                    : <div className="user-btn" title="Login / Signup">
-                        <img src="/assets/img/user-icon.svg" alt="user icon" className="icon user-icon" />
-                        <span className="login-signup-str">Login / Signup</span>
-                    </div>
-                }
-            </button>
+                {loggedinUser && isUserMenuOpen && <div className="user-menu-wrapper">
+                    <UserMenu
+                        loggedinUser={loggedinUser}
+                        userMenuRef={userMenuRef}
+                        logout={logout}
+                        toggleIsUserMenuOpen={toggleIsUserMenuOpen}
+                    />
+                </div>}
+            </div>
+
 
             <button className="mobile-nav-btn" onClick={toggleIsMobileNavOpen}>
                 <img src={`../assets/img/${isMobileNavOpen ? "x" : "bars"}.svg`}
