@@ -7,9 +7,10 @@ import { UserMenu } from "./UserMenu.jsx"
 
 
 const { useState, useEffect, useRef } = React
-const { NavLink, Link } = ReactRouterDOM
+const { NavLink, Link, useNavigate } = ReactRouterDOM
 
 export function AppHeader() {
+    const navigate = useNavigate()
 
     const [loggedinUser, setLoggedinUser] = useState(userService.getLoggedinUser())
 
@@ -89,6 +90,7 @@ export function AppHeader() {
         userService.logout()
             .then(() => {
                 setLoggedinUser(null)
+                navigate('/')
                 showSuccessMsg('Logout successful!')
             })
             .catch(err => {
