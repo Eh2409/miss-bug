@@ -2,14 +2,25 @@ import { userService } from "../services/user/index.js"
 
 const { useState, useEffect, useRef, Fragment } = React
 
-export function LoginSignup({ isSignup, toggleIsSignup, signup, login }) {
+export function LoginSignup({ isSignup, toggleIsSignup, signup, login, isPopupOpen }) {
     const [credentials, setCredentials] = useState(userService.getEmptyUser())
+
+    const defaultCredentials = useRef(userService.getEmptyUser())
 
     function handleChange({ target }) {
         var { name, value } = target
 
         setCredentials(prev => ({ ...prev, [name]: value }))
     }
+
+    useEffect(() => {
+        if (!isPopupOpen) {
+            setCredentials(defaultCredentials.current)
+            if (isSignup) {
+                toggleIsSignup()
+            }
+        }
+    }, [isPopupOpen])
 
     function onSubmit(ev) {
         ev.preventDefault()

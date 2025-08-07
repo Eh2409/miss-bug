@@ -156,6 +156,7 @@ export function AppHeader() {
                         toggleIsSignup={toggleIsSignup}
                         signup={signup}
                         login={login}
+                        isPopupOpen={isPopupOpen}
                     />
                 </Popup>
             </div>
