@@ -1,0 +1,23 @@
+.login-signup {
+    form {
+        display: grid;
+        gap: 0.4em;
+
+        input {
+            margin: 0;
+
+            &:last-of-type {
+                margin-block-end: 1em;
+            }
+        }
+
+        button {
+            margin-block-end: 1em;
+        }
+    }
+
+    .signup-toggle {
+        color: var(--color3);
+        cursor: pointer;
+    }
+}

@@ -18,8 +18,11 @@
     z-index: 20;
     cursor: auto;
 
+    min-width: 70vw;
+
     .popup-header {
         min-height: 2em;
+        margin-block-end: 1em;
 
         .close-btn {
             position: absolute;
@@ -28,4 +31,10 @@
         }
     }
 
+}
+
+@media (min-width: 700px) {
+    .popup {
+        min-width: 30vw;
+    }
 }

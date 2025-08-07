@@ -54,8 +54,19 @@
             display: none;
         }
 
-        .popup-btn {
+        .login-signup-btn {
             justify-self: end;
+
+            .user-btn {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                .user-icon {
+                    margin-inline-end: 0.2em;
+                }
+            }
+
         }
     }
 }
@@ -126,8 +137,12 @@
                 }
             }
 
-            .popup-btn {
+            .login-signup-btn {
                 justify-self: center;
+
+                .login-signup-str {
+                    display: none;
+                }
             }
         }
     }

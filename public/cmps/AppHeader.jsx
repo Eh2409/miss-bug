@@ -1,3 +1,7 @@
+import { userService } from "../services/user/index.js"
+import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js"
+
+import { LoginSignup } from "./LoginSignup.jsx"
 import { Popup } from "./Popup.jsx"
 
 const { useState } = React
@@ -5,8 +9,10 @@ const { NavLink, Link } = ReactRouterDOM
 
 export function AppHeader() {
 
+    const [loggedinUser, setLoggedinUser] = useState(userService.getLoggedinUser())
     const [isMobileNavOpen, setIsMobileNavOpen] = useState(false)
     const [isPopupOpen, setIsPopupOpen] = useState(false)
+    const [isSignup, setIsSignup] = useState(false)
 
     function toggleIsMobileNavOpen() {
         setIsMobileNavOpen(!isMobileNavOpen)
@@ -18,6 +24,47 @@ export function AppHeader() {
 
     function toggleIsPopupOpen() {
         setIsPopupOpen(!isPopupOpen)
+    }
+
+    function toggleIsSignup() {
+        setIsSignup(!isSignup)
+    }
+
+    /// auth
+
+    function signup(credentials) {
+        userService.signup(credentials)
+            .then(loggedinUser => {
+                setLoggedinUser(loggedinUser)
+                toggleIsPopupOpen()
+                showSuccessMsg('Signup successful!')
+            })
+            .catch(err => {
+                showErrorMsg(`Signup failed: ${err || 'Please try again later.'}`)
+            })
+    }
+
+    function login(credentials) {
+        userService.login(credentials)
+            .then(loggedinUser => {
+                setLoggedinUser(loggedinUser)
+                toggleIsPopupOpen()
+                showSuccessMsg('Login successful!')
+            })
+            .catch(err => {
+                showErrorMsg(`Login failed: ${err || 'Please try again later.'}`)
+            })
+    }
+
+    function logout() {
+        userService.logout()
+            .then(() => {
+                setLoggedinUser(null)
+                showSuccessMsg('logout successful!')
+            })
+            .catch(err => {
+                showErrorMsg(`Couldn't Logout`)
+            })
     }
 
     return <header className="app-header main-content">
@@ -38,7 +85,17 @@ export function AppHeader() {
                 <NavLink to="/about" onClick={onCloseMobileNav}>About</NavLink>
             </nav>
 
-            <button onClick={toggleIsPopupOpen} className="popup-btn">{isPopupOpen ? "Close popup" : "Open popup"}</button>
+
+
+            <button onClick={toggleIsPopupOpen} className="login-signup-btn">
+                {loggedinUser
+                    ? <div className="user-btn">{loggedinUser.username}</div>
+                    : <div className="user-btn" title="Login / Signup">
+                        <img src="/assets/img/user-icon.svg" alt="user icon" className="icon user-icon" />
+                        <span className="login-signup-str">Login / Signup</span>
+                    </div>
+                }
+            </button>
 
             <button className="mobile-nav-btn" onClick={toggleIsMobileNavOpen}>
                 <img src={`../assets/img/${isMobileNavOpen ? "x" : "bars"}.svg`}
@@ -46,11 +103,21 @@ export function AppHeader() {
                     className="icon" />
             </button>
 
+
             <div className={`popup-black-wrapper ${isPopupOpen ? "visible" : ""}`} onClick={toggleIsPopupOpen}>
                 <Popup
                     toggleIsPopupOpen={toggleIsPopupOpen}
-                />
+                    header={<h2>{isSignup ? "Signup" : "Login"}</h2>}
+                >
+                    <LoginSignup
+                        isSignup={isSignup}
+                        toggleIsSignup={toggleIsSignup}
+                        signup={signup}
+                        login={login}
+                    />
+                </Popup>
             </div>
+
         </div>
     </header >
 }
