@@ -1,56 +1,62 @@
 .app-header {
+    position: relative;
 
     padding-block: 1em;
     background-color: var(--bg4);
 
-    &>* {
-        align-items: center;
-        grid-row: 1;
-    }
+    .app-header-content {
 
-    .main-logo {
         display: flex;
-        justify-content: center;
+        justify-content: space-between;
         align-items: center;
 
-        justify-self: start;
-        font-size: 2em;
+        .main-logo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
 
-        font-family: raidercrusader, Arial, sans-serif;
+            justify-self: start;
+            font-size: 2em;
 
-        .bug-logo {
-            width: 30px;
-            aspect-ratio: 1/1;
-        }
+            font-family: raidercrusader, Arial, sans-serif;
 
-        &:hover {
             .bug-logo {
-                filter: saturate(2);
+                width: 30px;
+                aspect-ratio: 1/1;
+            }
+
+            &:hover {
+                .bug-logo {
+                    filter: saturate(2);
+                }
             }
         }
-    }
 
-    nav {
-        display: flex;
-        gap: 1em;
-        justify-self: center;
+        nav {
+            display: flex;
+            gap: 1em;
+            align-items: center;
 
-        font-family: Orbitron, Arial, sans-serif;
+            font-family: Orbitron, Arial, sans-serif;
 
-        a {
-            border-block-end: 1px solid transparent;
-            text-decoration: none;
+            a {
+                border-block-end: 1px solid transparent;
+                text-decoration: none;
 
-            &.active {
-                color: var(--color3);
+                &.active {
+                    color: var(--color3);
+                }
             }
         }
-    }
 
+        .mobile-nav-btn,
+        .nav-black-wrapper {
+            display: none;
+        }
 
-    .mobile-nav-btn,
-    .nav-black-wrapper {
-        display: none;
+        .popup-btn {
+            justify-self: end;
+        }
     }
 }
 
@@ -58,62 +64,70 @@
 
 @media (max-width: 700px) {
     .app-header {
+        display: grid;
         position: relative;
 
-        .mobile-nav-btn {
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        .app-header-content {
+            .mobile-nav-btn {
+                display: flex;
+                justify-content: center;
+                align-items: center;
 
-            justify-self: end;
-            z-index: 7;
-        }
+                justify-self: end;
+                width: max-content;
+                z-index: 7;
+            }
 
-        .nav-black-wrapper {
-            position: fixed;
-            inset: 0;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 4;
-            cursor: pointer;
+            .nav-black-wrapper {
+                position: fixed;
+                inset: 0;
+                background-color: rgba(0, 0, 0, 0.5);
+                z-index: 4;
+                cursor: pointer;
 
-            opacity: 0;
-            pointer-events: none;
-            transition: 200ms ease-in-out;
+                opacity: 0;
+                pointer-events: none;
+                transition: 200ms ease-in-out;
 
-            display: block;
+                display: block;
 
-            &.open-nav {
-                opacity: 1;
-                pointer-events: visible;
+                &.open-nav {
+                    opacity: 1;
+                    pointer-events: visible;
+
+                }
 
             }
 
-        }
+            nav {
+                position: fixed;
+                top: 0;
+                right: 0;
 
-        nav {
-            position: fixed;
-            top: 0;
-            right: 0;
+                display: flex;
+                flex-direction: column;
 
-            display: flex;
-            flex-direction: column;
+                background-color: var(--bg7);
+                outline: 1px solid var(--bg2);
+                border-radius: .2em;
 
-            background-color: var(--bg7);
-            outline: 1px solid var(--bg2);
-            border-radius: .2em;
+                min-height: 100vh;
+                min-width: 150px;
 
-            min-height: 100vh;
-            min-width: 150px;
+                margin-block-start: 4em;
+                padding-block-start: 1em;
 
-            margin-block-start: 4em;
-            padding-block-start: 1em;
+                z-index: 5;
+                transform: translateX(100%);
+                transition: 200ms ease-in-out;
 
-            z-index: 5;
-            transform: translateX(100%);
-            transition: 200ms ease-in-out;
+                &.open-nav {
+                    transform: translateX(0);
+                }
+            }
 
-            &.open-nav {
-                transform: translateX(0);
+            .popup-btn {
+                justify-self: center;
             }
         }
     }
