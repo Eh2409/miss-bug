@@ -1,0 +1,34 @@
+[
+    {
+        "_id": "104b",
+        "username": "e33",
+        "password": "E3333",
+        "fullname": "eliad",
+        "isAdmin": true,
+        "createdAt": 1723100000000
+    },
+    {
+        "_id": "105c",
+        "username": "mimi22",
+        "password": "MiMi2025",
+        "fullname": "Miriam Cohen",
+        "isAdmin": false,
+        "createdAt": 1723100100000
+    },
+    {
+        "_id": "106d",
+        "username": "dannyD",
+        "password": "dDpass321",
+        "fullname": "Danny Dahan",
+        "isAdmin": false,
+        "createdAt": 1723100200000
+    },
+    {
+        "_id": "108f",
+        "username": "ronit_x",
+        "password": "rxpass123",
+        "fullname": "Ronit Azulay",
+        "isAdmin": false,
+        "createdAt": 1723100400000
+    }
+]

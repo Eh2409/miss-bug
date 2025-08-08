@@ -24,3 +24,33 @@
 1.8.2025, 13:35:24 - ERROR - ReferenceError: PAGE_SIZE is not defined
 1.8.2025, 13:35:28 - ERROR - ReferenceError: PAGE_SIZE is not defined
 1.8.2025, 13:35:28 - ERROR - ReferenceError: PAGE_SIZE is not defined
+8.8.2025, 10:31:53 - ERROR - cannot find bug 105c
+8.8.2025, 10:32:18 - ERROR - cannot find bug 105c
+8.8.2025, 10:32:58 - ERROR - cannot find bug 105c
+8.8.2025, 10:33:10 - ERROR - cannot find bug 105c
+8.8.2025, 10:44:04 - ERROR - username or password is incorrect
+8.8.2025, 10:44:55 - ERROR - username or password is incorrect
+8.8.2025, 10:44:57 - ERROR - username or password is incorrect
+8.8.2025, 10:44:58 - ERROR - username or password is incorrect
+8.8.2025, 10:44:59 - ERROR - username or password is incorrect
+8.8.2025, 10:46:10 - ERROR - username or password is incorrect
+8.8.2025, 10:46:13 - ERROR - username or password is incorrect
+8.8.2025, 10:46:14 - ERROR - username or password is incorrect
+8.8.2025, 11:05:20 - ERROR - Username is taken
+8.8.2025, 11:06:41 - ERROR - Username is taken
+8.8.2025, 11:06:52 - ERROR - username or password is incorrect
+8.8.2025, 11:08:14 - ERROR - username or password is incorrect
+8.8.2025, 11:09:15 - ERROR - username or password is incorrect
+8.8.2025, 11:10:33 - ERROR - username or password is incorrect
+8.8.2025, 11:42:02 - ERROR - TypeError: userService.getLoginToken is not a function
+8.8.2025, 11:42:33 - ERROR - Username is taken
+8.8.2025, 12:01:59 - ERROR - TypeError: userService.getLoginToken is not a function
+8.8.2025, 13:11:20 - ERROR - Username is taken
+8.8.2025, 13:26:48 - ERROR - username or password is incorrect
+8.8.2025, 13:29:51 - ERROR - Username is taken
+8.8.2025, 13:30:12 - ERROR - Username is taken
+8.8.2025, 13:33:21 - ERROR - Username is taken
+8.8.2025, 13:35:25 - ERROR - Username is taken
+8.8.2025, 13:37:31 - ERROR - Username is taken
+8.8.2025, 13:39:06 - ERROR - Username is taken
+8.8.2025, 13:44:40 - ERROR - Username is taken

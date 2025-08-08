@@ -5,6 +5,8 @@ import cookieParse from 'cookie-parser'
 import { bugService } from './services/bug.service.js'
 import { loggerService } from './services/logger.service.js'
 import { generatePdf } from './services/pdf.service.js'
+import { userService } from './services/user.service.js'
+import { authService } from './services/auth.service.js'
 
 const app = express()
 
@@ -23,7 +25,8 @@ app.get('/api/bug', (req, res) => {
         labels: req.query.labels || [],
         sortType: req.query.sortType || 'new',
         dir: +req.query.dir || -1,
-        pageIdx: req.query.pageIdx !== 'undefined' ? req.query.pageIdx : undefined
+        pageIdx: req.query.pageIdx !== 'undefined' ? req.query.pageIdx : undefined,
+        creatorId: req.query.creatorId || ''
     }
 
     bugService.query(filterBy)
@@ -61,7 +64,7 @@ app.post('/api/bug', (req, res) => {
     const { title, description, severity, labels } = bug
 
     if (!title || !description || !severity) {
-        res.status(400).send('Required fields are missing')
+        return res.status(400).send('Required fields are missing')
     }
 
     const bugToSave = {
@@ -82,15 +85,12 @@ app.post('/api/bug', (req, res) => {
 })
 
 app.put('/api/bug/:bugId', (req, res) => {
-    console.log('req:', req)
-
     const { body: bug } = req
-    console.log('bug:', bug)
 
     const { _id, title, description, severity, createdAt, labels } = bug
 
     if (!_id || !title || !description || !severity) {
-        res.status(400).send('Required fields are missing')
+        return res.status(400).send('Required fields are missing')
     }
 
     const bugToSave = {
@@ -149,6 +149,131 @@ app.get('/api/bug/:bugId', (req, res) => {
             res.status(400).send(err)
         })
 })
+
+
+/// users
+
+app.get('/api/user', (req, res) => {
+
+    userService.query()
+        .then(users => res.send(users))
+        .catch(err => {
+            loggerService.error(err)
+            res.status(400).send(err)
+        })
+})
+
+app.put('/api/user/:userId', (req, res) => {
+    const loggedinUser = authService.validateToken(req.cookies.loginToken)
+
+    const { body: userToUpdate } = req
+    const { _id, username } = userToUpdate
+
+    if (!_id || !username) {
+        return res.status(400).send('Required fields are missing')
+    }
+
+    if (!loggedinUser || loggedinUser._id !== _id && !loggedinUser.isAdmin) {
+        return res.status(400).send('Not authorized to update user')
+    }
+
+    const userToSave = { _id, username }
+
+    userService.update(userToSave)
+        .then(savedUser => res.send(savedUser))
+        .catch(err => {
+            loggerService.error(err)
+            res.status(400).send(err)
+        })
+})
+
+app.delete('/api/user/:userId', (req, res) => {
+    const loggedinUser = authService.validateToken(req.cookies.loginToken)
+    const { userId } = req.params
+
+    if (!loggedinUser || !loggedinUser.isAdmin) {
+        return res.status(400).send('Not authorized to remove user')
+    }
+
+    userService.remove(userId)
+        .then(() => res.send(`user ${userId} removed`))
+        .catch(err => {
+            loggerService.error(err)
+            res.status(400).send(err)
+        })
+})
+
+app.get('/api/user/:userId', (req, res) => {
+    const { userId } = req.params
+
+    userService.getById(userId)
+        .then(user => res.send(user))
+        .catch(err => {
+            loggerService.error(err)
+            res.status(400).send(err)
+        })
+})
+
+
+/// auth
+
+app.post('/api/auth/login', (req, res) => {
+    const credentials = req.body
+    const { username, password } = credentials
+
+    if (!username || !password) {
+        return res.status(400).send('Missing required credentials')
+    }
+
+    authService.login({ username, password })
+        .then(user => {
+            const loginToken = authService.getLoginToken(user)
+            res.cookie('loginToken', loginToken)
+            res.send(user)
+        })
+        .catch(err => {
+            loggerService.error(err)
+            res.status(400).send(err)
+        })
+})
+
+app.post('/api/auth/signup', (req, res) => {
+    const credentials = req.body
+
+    const { username, password, fullname } = credentials
+
+    if (!username || !password || !fullname) {
+        return res.status(400).send('Missing required credentials')
+    }
+
+    userService.add(credentials)
+        .then(user => {
+
+            if (user) {
+                const loginToken = authService.getLoginToken(user)
+                res.cookie('loginToken', loginToken)
+                res.send(user)
+            } else {
+                res.status(400).send('Cannot Signup')
+            }
+        })
+        .catch(err => {
+            loggerService.error(err)
+            res.status(400).send(err)
+        })
+})
+
+app.post('/api/auth/logout', (req, res) => {
+    res.clearCookie('loginToken')
+    res.send('user logged out!')
+})
+
+// app.post('/api/auth/getLoggedinUser', (req, res) => {
+//     const token = req.cookies.loginToken
+//     const loggedinUser = authService.validateToken(token)
+//     res.send(loggedinUser)
+// })
+
 
 app.get('/*all', (req, res) => {
     res.sendFile(path.resolve('public/index.html'))

@@ -16,6 +16,7 @@
   "description": "",
   "dependencies": {
     "cookie-parser": "^1.4.7",
+    "cryptr": "^6.3.0",
     "express": "^5.1.0",
     "get-stream": "^9.0.1",
     "pdfkit-table": "^0.1.99"
