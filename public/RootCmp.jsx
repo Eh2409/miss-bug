@@ -13,6 +13,7 @@ import { BugDetails } from './pages/BugDetails.jsx'
 import { AboutUs } from './pages/AboutUs.jsx'
 import { BugEdit } from './pages/BugEdit.jsx'
 import { UserDetails } from './pages/UserDetails.jsx'
+import { UserIndex } from './pages/UserIndex.jsx'
 
 export function App() {
 
@@ -30,6 +31,7 @@ export function App() {
                     <Route path="/bug/edit/:bugId" element={<BugEdit />} />
                     <Route path="/bug/:bugId" element={<BugDetails />} />
                     <Route path="/about" element={<AboutUs />} />
+                    <Route path="/user" element={<UserIndex loggedinUser={loggedinUser} />} />
                     <Route path="/user/:userId" element={<UserDetails loggedinUser={loggedinUser} setLoggedinUser={setLoggedinUser} />} />
                     <Route path="/user/:userId/:btnType" element={<UserDetails loggedinUser={loggedinUser} setLoggedinUser={setLoggedinUser} />} />
                 </Routes>

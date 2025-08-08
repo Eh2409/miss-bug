@@ -1,0 +1,30 @@
+.user-index {
+    .user-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+
+        gap: 10px;
+
+        padding: 0;
+        list-style: none;
+
+        .user-item {
+            display: grid;
+            grid-template-rows: subgrid;
+            grid-row: 3 span;
+            gap: 1em;
+
+            padding: .7em;
+            background-color: var(--bg1);
+            outline: 1px solid var(--bg2);
+            border-radius: .2em;
+
+            overflow: hidden;
+
+            box-shadow: inset 10px 10px 10px rgba(33, 79, 26, 0.2),
+                15px 20px 10px rgba(0, 0, 0, 0.05),
+                15px 20px 20px rgba(0, 0, 0, 0.05),
+                inset -10px -10px 15px rgba(255, 255, 255, 0.05);
+        }
+    }
+}

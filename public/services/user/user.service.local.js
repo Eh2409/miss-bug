@@ -1,7 +1,6 @@
 import { utilService } from '../util.service.js'
 import { storageService } from '../async-storage.service.js'
 
-
 const STORAGE_KEY = 'user'
 
 _createUsers()
@@ -21,7 +20,6 @@ export const userService = {
     logout,
     getLoggedinUser,
 }
-
 
 
 function query(filterBy = {}) {

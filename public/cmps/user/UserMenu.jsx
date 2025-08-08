@@ -11,6 +11,7 @@ export function UserMenu({ loggedinUser, userMenuRef, logout, toggleIsUserMenuOp
 
             <nav className="user-manu-nav">
                 <NavLink to={`/user/${loggedinUser._id}`} onClick={toggleIsUserMenuOpen}>My Account</NavLink>
+                {loggedinUser && loggedinUser.isAdmin && <NavLink to={`/user`} onClick={toggleIsUserMenuOpen}>Users</NavLink>}
             </nav>
 
         </section>

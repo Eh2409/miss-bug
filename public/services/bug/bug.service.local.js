@@ -12,7 +12,8 @@ export const bugService = {
     getById,
     save,
     remove,
-    createPdf
+    createPdf,
+    isUserHaveBug
 }
 
 function query(filterBy) {
@@ -140,4 +141,11 @@ function _createBugs() {
 
 function createPdf() {
     return Promise.reject('PDF creation is not supported on the local service.')
+}
+
+function isUserHaveBug(userId) {
+    return storageService.query(STORAGE_KEY)
+        .then(bugs => {
+            return bugs.some(b => b.creator._id === userId)
+        })
 }

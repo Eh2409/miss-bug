@@ -3,7 +3,7 @@ import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js"
 
 import { LoginSignup } from "./LoginSignup.jsx"
 import { Popup } from "./Popup.jsx"
-import { UserMenu } from "./UserMenu.jsx"
+import { UserMenu } from "./user/UserMenu.jsx"
 
 
 const { useState, useEffect, useRef } = React
