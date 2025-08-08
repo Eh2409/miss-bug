@@ -8,7 +8,8 @@ export const bugService = {
     getById,
     remove,
     add,
-    update
+    update,
+    isUserHaveBug
 }
 
 const bugs = readJsonFile('data/bug.json')
@@ -19,6 +20,10 @@ function query(filterBy = {}) {
     return Promise.resolve(bugs)
         .then(bugs => {
             var filteredBugs = structuredClone(bugs)
+
+            if (filterBy.creatorId) {
+                filteredBugs = filteredBugs.filter(bug => bug.creator._id === filterBy.creatorId)
+            }
 
             if (filterBy.txt) {
                 const regExp = new RegExp(filterBy.txt, 'i')
@@ -94,6 +99,11 @@ function update(bugToSave) {
     }
     bugs[idx] = { ...bugs[idx], ...bugToSave }
     return _saveBugs().then(() => bugToSave)
+}
+
+function isUserHaveBug(userId) {
+    const hasBugs = bugs.some(b => b.creator._id === userId)
+    return Promise.resolve(hasBugs)
 }
 
 function _saveBugs() {

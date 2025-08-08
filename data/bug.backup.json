@@ -4,139 +4,282 @@
         "title": "Cannot save a new car",
         "description": "problem when clicking Save",
         "severity": 3,
-        "createdAt": 1542107359454
+        "createdAt": 1542107359454,
+        "labels": [
+            "critical"
+        ],
+        "creator": {
+            "_id": "104b",
+            "username": "e33"
+        }
     },
     {
         "_id": "def456",
         "title": "Page not loading on Safari",
         "description": "The homepage stays blank in Safari browser",
         "severity": 2,
-        "createdAt": 1620107359454
+        "createdAt": 1620107359454,
+        "labels": [
+            "critical",
+            "dev-branch"
+        ],
+        "creator": {
+            "_id": "104b",
+            "username": "e33"
+        }
     },
     {
         "_id": "ghi789",
         "title": "Login button unresponsive",
         "description": "Clicking login does nothing on mobile",
         "severity": 4,
-        "createdAt": 1652107359454
+        "createdAt": 1652107359454,
+        "labels": [
+            "critical"
+        ],
+        "creator": {
+            "_id": "104b",
+            "username": "e33"
+        }
     },
     {
         "_id": "jkl012",
         "title": "Dropdown not closing",
         "description": "The dropdown menu stays open after selection",
         "severity": 1,
-        "createdAt": 1684107359454
+        "createdAt": 1684107359454,
+        "labels": [
+            "critical"
+        ],
+        "creator": {
+            "_id": "104b",
+            "username": "e33"
+        }
     },
     {
         "_id": "mno345",
         "title": "Data not syncing",
         "description": "User data is not syncing with the server",
         "severity": 5,
-        "createdAt": 1706107359454
+        "createdAt": 1706107359454,
+        "labels": [
+            "critical",
+            "dev-branch"
+        ],
+        "creator": {
+            "_id": "104b",
+            "username": "e33"
+        }
     },
     {
         "_id": "pqr678",
         "title": "Image not uploading",
         "description": "Users can't upload profile pictures",
         "severity": 3,
-        "createdAt": 1707107359454
+        "createdAt": 1707107359454,
+        "labels": [
+            "dev-branch"
+        ],
+        "creator": {
+            "_id": "104b",
+            "username": "e33"
+        }
     },
     {
         "_id": "stu901",
         "title": "Search returns no results",
         "description": "Search is broken for common keywords",
         "severity": 4,
-        "createdAt": 1708107359454
+        "createdAt": 1708107359454,
+        "labels": [
+            "critical"
+        ],
+        "creator": {
+            "_id": "104b",
+            "username": "e33"
+        }
     },
     {
         "_id": "vwx234",
         "title": "Incorrect total in cart",
         "description": "The shopping cart total is calculated incorrectly",
         "severity": 5,
-        "createdAt": 1709107359454
+        "createdAt": 1709107359454,
+        "labels": [
+            "critical"
+        ],
+        "creator": {
+            "_id": "104b",
+            "username": "e33"
+        }
     },
     {
         "_id": "yz1234",
         "title": "Notification panel not opening",
         "description": "Clicking the bell icon does nothing",
         "severity": 2,
-        "createdAt": 1710107359454
+        "createdAt": 1710107359454,
+        "labels": [
+            "dev-branch"
+        ],
+        "creator": {
+            "_id": "104b",
+            "username": "e33"
+        }
     },
     {
         "_id": "abc567",
         "title": "App crashes on startup",
         "description": "The app crashes immediately on launch on Android",
         "severity": 5,
-        "createdAt": 1711107359454
+        "createdAt": 1711107359454,
+        "labels": [
+            "critical"
+        ],
+        "creator": {
+            "_id": "104b",
+            "username": "e33"
+        }
     },
     {
         "_id": "def890",
         "title": "Dark mode not persisting",
         "description": "Theme resets to light mode after refresh",
         "severity": 2,
-        "createdAt": 1712107359454
+        "createdAt": 1712107359454,
+        "labels": [
+            "dev-branch"
+        ],
+        "creator": {
+            "_id": "104b",
+            "username": "e33"
+        }
     },
     {
         "_id": "ghi123",
         "title": "Missing translations",
         "description": "Some UI elements are not translated in French",
         "severity": 1,
-        "createdAt": 1713107359454
+        "createdAt": 1713107359454,
+        "labels": [
+            "critical"
+        ],
+        "creator": {
+            "_id": "104b",
+            "username": "e33"
+        }
     },
     {
         "_id": "jkl456",
         "title": "Audio playback error",
         "description": "Audio files fail to play on iOS devices",
         "severity": 3,
-        "createdAt": 1714107359454
+        "createdAt": 1714107359454,
+        "labels": [
+            "need-CR"
+        ],
+        "creator": {
+            "_id": "104b",
+            "username": "e33"
+        }
     },
     {
         "_id": "mno789",
         "title": "Form validation not triggering",
         "description": "Form allows submission with empty required fields",
         "severity": 4,
-        "createdAt": 1715107359454
+        "createdAt": 1715107359454,
+        "labels": [
+            "critical"
+        ],
+        "creator": {
+            "_id": "104b",
+            "username": "e33"
+        }
     },
     {
         "_id": "pqr012",
         "title": "Map location off-center",
         "description": "Selected location appears outside the map view",
         "severity": 2,
-        "createdAt": 1716107359454
+        "createdAt": 1716107359454,
+        "labels": [
+            "critical"
+        ],
+        "creator": {
+            "_id": "108f",
+            "username": "ronit_x"
+        }
     },
     {
         "_id": "stu345",
         "title": "Text overflow in buttons",
         "description": "Long text in buttons overflows on small screens",
         "severity": 1,
-        "createdAt": 1717107359454
+        "createdAt": 1717107359454,
+        "labels": [
+            "critical"
+        ],
+        "creator": {
+            "_id": "108f",
+            "username": "ronit_x"
+        }
     },
     {
         "_id": "vwx678",
         "title": "Session timeout too short",
         "description": "Users are logged out too quickly after inactivity",
         "severity": 3,
-        "createdAt": 1718107359454
+        "createdAt": 1718107359454,
+        "labels": [
+            "need-CR"
+        ],
+        "creator": {
+            "_id": "108f",
+            "username": "ronit_x"
+        }
     },
     {
         "_id": "yz9012",
         "title": "Undo not working",
         "description": "Undo button doesn't reverse recent changes",
         "severity": 4,
-        "createdAt": 1719107359454
+        "createdAt": 1719107359454,
+        "labels": [
+            "critical"
+        ],
+        "creator": {
+            "_id": "106d",
+            "username": "dannyD"
+        }
     },
     {
         "_id": "abc345",
         "title": "Cannot reset password",
         "description": "Reset link returns a 404 page",
         "severity": 5,
-        "createdAt": 1720107359454
+        "createdAt": 1720107359454,
+        "labels": [
+            "critical",
+            "need-CR"
+        ],
+        "creator": {
+            "_id": "106d",
+            "username": "dannyD"
+        }
     },
     {
         "_id": "def678",
         "title": "Tooltip stuck on screen",
         "description": "Tooltip doesn't disappear after hover out",
         "severity": 2,
-        "createdAt": 1721107359454
+        "createdAt": 1721107359454,
+        "labels": [
+            "dev-branch"
+        ],
+        "creator": {
+            "_id": "105c",
+            "username": "mimi22"
+        }
     }
 ]

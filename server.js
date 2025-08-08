@@ -59,9 +59,15 @@ app.get('/api/bug/pdf', (req, res) => {
 })
 
 app.post('/api/bug', (req, res) => {
+    const loggedinUser = authService.validateToken(req.cookies.loginToken)
     const bug = req.body
 
+    if (!loggedinUser) {
+        return res.status(400).send('Not authorized to add bug')
+    }
+
     const { title, description, severity, labels } = bug
+
 
     if (!title || !description || !severity) {
         return res.status(400).send('Required fields are missing')
@@ -72,9 +78,8 @@ app.post('/api/bug', (req, res) => {
         description,
         severity: +severity,
         labels,
+        creator: { _id: loggedinUser._id, username: loggedinUser.username }
     }
-
-    console.log(bugToSave);
 
     bugService.add(bugToSave)
         .then(savedBug => res.send(savedBug))
@@ -85,13 +90,19 @@ app.post('/api/bug', (req, res) => {
 })
 
 app.put('/api/bug/:bugId', (req, res) => {
+    const loggedinUser = authService.validateToken(req.cookies.loginToken)
     const { body: bug } = req
 
-    const { _id, title, description, severity, createdAt, labels } = bug
+    const { _id, title, description, severity, createdAt, labels, creator } = bug
 
-    if (!_id || !title || !description || !severity) {
+    if (!_id || !title || !description || !severity || !creator || !createdAt) {
         return res.status(400).send('Required fields are missing')
     }
+
+    if (!loggedinUser || loggedinUser._id !== creator._id && !loggedinUser.isAdmin) {
+        return res.status(400).send('Not authorized to update bug')
+    }
+
 
     const bugToSave = {
         _id,
@@ -100,9 +111,8 @@ app.put('/api/bug/:bugId', (req, res) => {
         severity: +severity,
         createdAt: +createdAt,
         labels,
+        creator
     }
-
-    console.log(bugToSave);
 
     bugService.update(bugToSave)
         .then(savedBug => res.send(savedBug))
@@ -113,10 +123,26 @@ app.put('/api/bug/:bugId', (req, res) => {
 })
 
 app.delete('/api/bug/:bugId', (req, res) => {
+    const loggedinUser = authService.validateToken(req.cookies.loginToken)
     const { bugId } = req.params
+
+    if (!loggedinUser) {
+        return res.status(400).send('Not authorized to remove bug')
+    }
 
     bugService.remove(bugId)
         .then(() => res.send(`Bug ${bugId} removed`))
+        .catch(err => {
+            loggerService.error(err)
+            res.status(400).send(err)
+        })
+})
+
+app.get('/api/bug/hasBugs/:bugId', (req, res) => {
+    const { bugId } = req.params
+
+    bugService.isUserHaveBug(bugId)
+        .then(hasBugs => res.send(hasBugs))
         .catch(err => {
             loggerService.error(err)
             res.status(400).send(err)
@@ -149,7 +175,6 @@ app.get('/api/bug/:bugId', (req, res) => {
             res.status(400).send(err)
         })
 })
-
 
 /// users
 
