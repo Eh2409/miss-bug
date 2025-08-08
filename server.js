@@ -138,10 +138,10 @@ app.delete('/api/bug/:bugId', (req, res) => {
         })
 })
 
-app.get('/api/bug/hasBugs/:bugId', (req, res) => {
-    const { bugId } = req.params
+app.get('/api/bug/hasBugs/:userId', (req, res) => {
+    const { userId } = req.params
 
-    bugService.isUserHaveBug(bugId)
+    bugService.isUserHaveBug(userId)
         .then(hasBugs => res.send(hasBugs))
         .catch(err => {
             loggerService.error(err)
