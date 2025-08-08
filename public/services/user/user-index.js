@@ -1,8 +1,9 @@
 
 import { userService as local } from "./user.service.local.js"
+import { userService as remote } from "./user.service.remote.js"
 
 /// Allows me to manually control which server I use
-const isRemote = false
+const isRemote = true
 
 function getEmptyUser() {
     return {
@@ -12,5 +13,5 @@ function getEmptyUser() {
     }
 }
 
-const service = local
+const service = isRemote ? remote : local
 export const userService = { getEmptyUser, ...service }
