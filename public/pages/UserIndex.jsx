@@ -1,5 +1,5 @@
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js"
-import { bugService } from "../services/bug/bug.service.local.js"
+import { bugService } from "../services/bug/index.js"
 import { userService } from "../services/user/user-index.js"
 import { UserList } from "../cmps/user/UserList.jsx"
 import { BugLoader } from "../cmps/bug/BugLoader.jsx"
@@ -40,6 +40,7 @@ export function UserIndex({ loggedinUser }) {
 
         bugService.isUserHaveBug(userId)
             .then(isHaveBug => {
+                console.log('isHaveBug:', isHaveBug)
                 if (!isHaveBug) {
                     userService.remove(userId)
                         .then(() => {

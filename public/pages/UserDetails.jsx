@@ -106,7 +106,8 @@ export function UserDetails({ loggedinUser, setLoggedinUser }) {
                 setNewUsername('')
             })
             .catch(err => {
-                showErrorMsg(err || 'Could not update username. Please try again later.')
+                console.log('err:', err)
+                showErrorMsg('Could not update username, the username is taken.')
             })
     }
 

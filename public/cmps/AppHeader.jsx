@@ -68,7 +68,8 @@ export function AppHeader({ loggedinUser, setLoggedinUser }) {
                 showSuccessMsg('Signup successful!')
             })
             .catch(err => {
-                showErrorMsg(`Signup failed: ${err || 'Please try again later.'}`)
+                console.log('err:', err)
+                showErrorMsg(`Signup failed, Please try again later.`)
             })
     }
 
@@ -80,7 +81,8 @@ export function AppHeader({ loggedinUser, setLoggedinUser }) {
                 showSuccessMsg('Login successful!')
             })
             .catch(err => {
-                showErrorMsg(`Login failed: ${err || 'Please try again later.'}`)
+                console.log('err:', err)
+                showErrorMsg(`Login failed Please try again later.`)
             })
     }
 
@@ -92,6 +94,7 @@ export function AppHeader({ loggedinUser, setLoggedinUser }) {
                 showSuccessMsg('Logout successful!')
             })
             .catch(err => {
+                console.log('err:', err)
                 showErrorMsg(`Couldn't Logout`)
             })
     }
