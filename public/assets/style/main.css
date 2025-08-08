@@ -10,6 +10,7 @@
 @import './pages/BugIndex.css';
 @import './pages/BugDetails.css';
 @import './pages/BugEdit.css';
+@import './pages/UserDetails.css';
 
 @import './cmps/AppHeader.css';
 @import './cmps/AppFooter.css';

@@ -30,7 +30,8 @@ export function App() {
                     <Route path="/bug/edit/:bugId" element={<BugEdit />} />
                     <Route path="/bug/:bugId" element={<BugDetails />} />
                     <Route path="/about" element={<AboutUs />} />
-                    <Route path="/user/:userId" element={<UserDetails />} />
+                    <Route path="/user/:userId" element={<UserDetails loggedinUser={loggedinUser} setLoggedinUser={setLoggedinUser} />} />
+                    <Route path="/user/:userId/:btnType" element={<UserDetails loggedinUser={loggedinUser} setLoggedinUser={setLoggedinUser} />} />
                 </Routes>
             </main>
             <AppFooter />

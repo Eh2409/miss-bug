@@ -13,7 +13,8 @@ function getDefaultFilter() {
         labels: [],
         sortType: 'createdAt',
         dir: -1,
-        pageIdx: undefined
+        pageIdx: undefined,
+        creatorId: '',
     }
 }
 

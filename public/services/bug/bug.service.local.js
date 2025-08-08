@@ -19,6 +19,10 @@ function query(filterBy) {
     return storageService.query(STORAGE_KEY)
         .then(bugs => {
 
+            if (filterBy.creatorId) {
+                bugs = bugs.filter(bug => bug.creator._id === filterBy.creatorId)
+            }
+
             if (filterBy.txt) {
                 const regExp = new RegExp(filterBy.txt, 'i')
                 bugs = bugs.filter(bug => regExp.test(bug.title))
@@ -28,7 +32,7 @@ function query(filterBy) {
                 bugs = bugs.filter(bug => bug.severity >= filterBy.minSeverity)
             }
 
-            if (filterBy.labels.length > 0) {
+            if (filterBy.labels && filterBy.labels.length > 0) {
                 bugs = bugs.filter(bug => {
                     return bug.labels.some(label => filterBy.labels.includes(label))
                 })
@@ -47,7 +51,6 @@ function query(filterBy) {
 
 
             const maxPageCount = Math.ceil(bugs.length / PAGE_SIZE)
-
 
             if (filterBy.pageIdx !== undefined) {
                 const startIdx = filterBy.pageIdx * PAGE_SIZE

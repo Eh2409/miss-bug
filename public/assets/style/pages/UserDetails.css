@@ -1,0 +1,46 @@
+.user-details {
+    h2 {
+        margin-block-end: 1em;
+    }
+
+    .user-details-nav {
+        margin: 2px;
+        margin-block-end: 1em;
+        border: 0;
+        border-radius: .2em;
+        cursor: pointer;
+        background-color: var(--bg6);
+        color: white;
+        outline: 1px solid var(--bg5);
+        font-size: 1em;
+        padding: 6px 10px;
+
+        a {
+            transition: 200ms ease-in-out;
+            outline: 1px solid var(--bg5);
+            padding: 6px 10px;
+
+            &:hover {
+                background-color: var(--bg5);
+                color: black;
+            }
+
+            &.active {
+                background-color: var(--bg5);
+                color: black;
+            }
+        }
+    }
+
+    .settings {
+        background-color: var(--bg7);
+        outline: 1px solid var(--bg2);
+        border-radius: .2em;
+        padding: 1em;
+
+        box-shadow: inset 10px 10px 10px rgba(33, 79, 26, 0.2),
+            15px 20px 10px rgba(0, 0, 0, 0.05),
+            15px 20px 20px rgba(0, 0, 0, 0.05),
+            inset -10px -10px 15px rgba(255, 255, 255, 0.08);
+    }
+}
