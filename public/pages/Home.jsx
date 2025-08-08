@@ -1,6 +1,7 @@
 const { Link } = ReactRouterDOM
 
 export function Home() {
+
     return <section className="full-width  home-page">
 
         <div className="animated-bg"></div>

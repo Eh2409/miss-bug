@@ -1,4 +1,4 @@
-import { userService } from "../services/user/index.js"
+import { userService } from "../services/user/user-index.js"
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js"
 
 import { LoginSignup } from "./LoginSignup.jsx"
@@ -9,10 +9,8 @@ import { UserMenu } from "./UserMenu.jsx"
 const { useState, useEffect, useRef } = React
 const { NavLink, Link, useNavigate } = ReactRouterDOM
 
-export function AppHeader() {
+export function AppHeader({ loggedinUser, setLoggedinUser }) {
     const navigate = useNavigate()
-
-    const [loggedinUser, setLoggedinUser] = useState(userService.getLoggedinUser())
 
     const [isMobileNavOpen, setIsMobileNavOpen] = useState(false)
     const [isPopupOpen, setIsPopupOpen] = useState(false)

@@ -2,6 +2,7 @@ const { useState, useEffect, useRef } = React
 const { useSearchParams, Link } = ReactRouterDOM
 
 import { bugService } from '../services/bug/index.js'
+
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
 
 import { BugFilter } from '../cmps/bug/BugFilter.jsx'
@@ -11,7 +12,8 @@ import { BugSort } from '../cmps/bug/BugSort.jsx'
 import { Pagination } from '../cmps/Pagination.jsx'
 import { utilService } from '../services/util.service.js'
 
-export function BugIndex() {
+export function BugIndex({ loggedinUser }) {
+
     const [bugs, setBugs] = useState(null)
 
     const [searchParams, setSearchParams] = useSearchParams()
@@ -137,7 +139,7 @@ export function BugIndex() {
             <div className="bug-toolbar">
 
                 <div className="btns">
-                    <Link to='/bug/edit' className='btn'>Add Bug</Link>
+                    {loggedinUser && <Link to='/bug/edit' className='btn'>Add Bug</Link>}
                     <button onClick={onMakePdf} title="create bugs pdf">
                         <img src="../assets/img/pdf.svg" alt="pdf" className="icon" />
                     </button>
@@ -164,7 +166,9 @@ export function BugIndex() {
 
         {bugs && !isbugsLoading.isLoading ? <BugList
             bugs={bugs}
-            onRemoveBug={onRemoveBug} />
+            onRemoveBug={onRemoveBug}
+            loggedinUser={loggedinUser}
+        />
             : <BugLoader />
         }
 

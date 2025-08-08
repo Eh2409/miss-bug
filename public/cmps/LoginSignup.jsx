@@ -1,4 +1,4 @@
-import { userService } from "../services/user/index.js"
+import { userService } from "../services/user/user-index.js"
 
 const { useState, useEffect, useRef, Fragment } = React
 

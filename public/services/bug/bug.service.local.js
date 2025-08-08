@@ -1,5 +1,6 @@
 import { utilService } from '../util.service.js'
 import { storageService } from '../async-storage.service.js'
+import { userService } from '../user/user.service.local.js'
 
 const STORAGE_KEY = 'bugs'
 const PAGE_SIZE = 8
@@ -69,6 +70,8 @@ function save(bug) {
     if (bug._id) {
         return storageService.put(STORAGE_KEY, bug)
     } else {
+        const user = userService.getLoggedinUser()
+        bug.creator = { _id: user._id, username: user.username }
         bug.createdAt = Date.now()
         return storageService.post(STORAGE_KEY, bug)
     }
@@ -85,7 +88,11 @@ function _createBugs() {
             _id: "1NF1N1T3",
             description: "The system enters a loop that never exits, causing the application to hang indefinitely.",
             createdAt: 1646524800, // 	3/5/2022		
-            labels: ['critical', 'dev-branch']
+            labels: ['critical', 'dev-branch'],
+            creator: {
+                _id: "100b",
+                username: "shlomka123"
+            }
         },
         {
             title: "Keyboard Not Found",
@@ -93,7 +100,11 @@ function _createBugs() {
             _id: "K3YB0RD",
             description: "Input device not recognized. User is unable to provide any input via keyboard.",
             createdAt: 1717372800, // 	6/3/2024		
-            labels: ['critical', 'need-CR']
+            labels: ['critical', 'need-CR'],
+            creator: {
+                _id: "101b",
+                username: "barash87"
+            }
         },
         {
             title: "404 Coffee Not Found",
@@ -101,7 +112,11 @@ function _createBugs() {
             _id: "C0FF33",
             description: "Developer caffeine levels critically low. Coffee not located in expected location.",
             createdAt: 931536000, // 	7/3/1999	
-            labels: ['critical']
+            labels: ['critical'],
+            creator: {
+                _id: "102b",
+                username: "adminQueen"
+            }
         },
         {
             title: "Unexpected Response",
@@ -109,7 +124,11 @@ function _createBugs() {
             _id: "G0053",
             description: "Received an unexpected response from the server, causing a temporary UI glitch.",
             createdAt: 1120972800, // 	7/10/2005		
-            labels: ['dev-branch']
+            labels: ['dev-branch'],
+            creator: {
+                _id: "103b",
+                username: "tailfighter99"
+            }
         }
     ]
     utilService.saveToStorage(STORAGE_KEY, bugs)
