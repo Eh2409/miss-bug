@@ -96,18 +96,20 @@ function update(updatedUser) {
             return Promise.reject('Username is taken')
         }
 
-        return getById(_id).then(user => {
-            const userToSave = { ...user, username }
+        const idx = users.findIndex(user => user._id === _id)
+        if (idx === -1) {
+            return Promise.reject(`user ${_id} dont found`)
+        }
 
-            users.unshift(userToSave)
+        users[idx] = { ...users[idx], username }
 
-            return _saveUsers().then(() => {
-                const savedUser = { ...userToSave }
-                delete savedUser.password
-                return Promise.resolve(savedUser)
-            })
+        return _saveUsers().then(() => {
+            const savedUser = { ...users[idx] }
+            delete savedUser.password
+            return Promise.resolve(savedUser)
         })
     })
+
 }
 
 function _saveUsers() {
