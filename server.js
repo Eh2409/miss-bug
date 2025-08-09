@@ -304,5 +304,5 @@ app.get('/*all', (req, res) => {
     res.sendFile(path.resolve('public/index.html'))
 })
 
-const port = 3030
-app.listen(port, () => console.log(`Server ready at port http://127.0.0.1:${port}`))
+const PORT = process.env.PORT || 3030
+app.listen(PORT, () => console.log(`Server ready at port http://127.0.0.1:${PORT}`))
