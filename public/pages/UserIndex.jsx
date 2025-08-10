@@ -1,5 +1,4 @@
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js"
-import { bugService } from "../services/bug/index.js"
 import { userService } from "../services/user/user-index.js"
 import { UserList } from "../cmps/user/UserList.jsx"
 import { BugLoader } from "../cmps/bug/BugLoader.jsx"
@@ -37,25 +36,14 @@ export function UserIndex({ loggedinUser }) {
     }
 
     function onRemove(userId) {
-
-        bugService.isUserHaveBug(userId)
-            .then(isHaveBug => {
-                console.log('isHaveBug:', isHaveBug)
-                if (!isHaveBug) {
-                    userService.remove(userId)
-                        .then(() => {
-                            setUsers(prev => prev.filter(u => u._id !== userId))
-                            showSuccessMsg('User successfully removed.')
-                        })
-                        .catch(err => {
-                            showErrorMsg('Failed to remove user. Please try again.')
-                        })
-                } else {
-                    showErrorMsg('Cannot remove user who has bugs.')
-                }
+        userService.remove(userId)
+            .then(() => {
+                setUsers(prev => prev.filter(u => u._id !== userId))
+                showSuccessMsg('User successfully removed.')
             })
             .catch(err => {
-                showErrorMsg('Failed to remove user. Please try again.')
+                console.log(err);
+                showErrorMsg('Cannot remove user who has bugs.')
             })
     }
 

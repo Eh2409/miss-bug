@@ -6,7 +6,6 @@ export const bugService = {
     save,
     remove,
     createPdf,
-    isUserHaveBug
 }
 
 
@@ -17,12 +16,6 @@ function query(filterBy = {}) {
 
 function getById(bugId) {
     return axios.get(BASE_URL + '/' + bugId)
-        .then(res => res.data)
-}
-
-function isUserHaveBug(userId) {
-    console.log('userId:', userId)
-    return axios.get(BASE_URL + '/hasBugs/' + userId)
         .then(res => res.data)
 }
 

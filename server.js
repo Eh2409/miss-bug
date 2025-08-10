@@ -138,17 +138,6 @@ app.delete('/api/bug/:bugId', (req, res) => {
         })
 })
 
-app.get('/api/bug/hasBugs/:userId', (req, res) => {
-    const { userId } = req.params
-
-    bugService.isUserHaveBug(userId)
-        .then(hasBugs => res.send(hasBugs))
-        .catch(err => {
-            loggerService.error(err)
-            res.status(400).send(err)
-        })
-})
-
 app.get('/api/bug/:bugId', (req, res) => {
     const { bugId } = req.params
 
@@ -219,14 +208,22 @@ app.delete('/api/user/:userId', (req, res) => {
     if (!loggedinUser || !loggedinUser.isAdmin) {
         return res.status(400).send('Not authorized to remove user')
     }
+    
+    bugService.isUserHaveBug(userId).then(hasBugs => {
 
-    userService.remove(userId)
-        .then(() => res.send(`user ${userId} removed`))
-        .catch(err => {
-            loggerService.error(err)
-            res.status(400).send(err)
-        })
+        if (hasBugs) {
+            return res.status(400).send('Not authorized to remove user')
+        }
+
+        userService.remove(userId)
+            .then(() => res.send(`user ${userId} removed`))
+            .catch(err => {
+                loggerService.error(err)
+                res.status(400).send(err)
+            })
+    })
 })
+
 
 app.get('/api/user/:userId', (req, res) => {
     const { userId } = req.params
